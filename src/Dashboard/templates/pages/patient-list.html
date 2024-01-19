@@ -8,7 +8,7 @@
 
 {% block dashboard_content %}
   <div class="flex flex-1 flex-col items-center pb-[5rem]">
-    <div class="flex flex-col max-w-[80%]">
+    <div class="flex flex-1 flex-col max-w-[80%] justify-start w-full">
       <div class="text-[30pt] font-bold"><i class="fas fa-list text-primary mr-[1rem]"></i>Patient list</div>
       {% if patients.count > 0 %}
       <div class="overflow-x-auto">
@@ -32,7 +32,25 @@
             {% for patient in patients %}
               <tr>
                 <td>
-                  <button class="btn btn-primary join-item"><i class="fas fa-pen"></i></button>
+                  <div class="flex">
+                    <a href="{% url "edit-patient" patientId=patient.id %}"><button class="btn btn-primary join-item"><i class="fas fa-pen"></i></button></a>
+                    <button class="btn btn-error ml-[0.5rem]" onclick="modal_{{forloop.counter}}.showModal()"><i class="fas fa-trash"></i></button>
+                  </div>
+                  <dialog id="modal_{{forloop.counter}}" class="modal">
+                    <div class="modal-box">
+                      <h3 class="font-bold text-lg">Delete confirmation</h3>
+                      <p class="py-4">Are you sure you want to delete patient "{{patient.firstName}} {{patient.lastName}}"</p>
+                      <div class="modal-action">
+                        <form action="{% url "delete-patient" patientId=patient.id %}" method="post">
+                          {% csrf_token %}
+                          <button class="btn btn-error">Delete</button>
+                        </form>
+                        <form method="dialog">
+                          <button class="btn">Close</button>
+                        </form>
+                      </div>
+                    </div>
+                  </dialog>   
                 </td>
                 <td>{{patient.id}}</td> 
                 <td>{{patient.firstName}}</td> 
@@ -50,7 +68,10 @@
         </table>
       </div>
       {% else %}
-        <h1>No patient</h1>
+        <div class="flex flex-1 flex-col justify-center items-center h-full w-full">
+          <img class="h-[30%]" src="{% static "assets/empty-list.svg" %}" alt="empty-list">
+          <div class="text-[20pt]">The list is empty</div>
+        </div>
       {% endif %}
       
     </div>

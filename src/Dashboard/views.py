@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .decorators import login_not_required
-from .forms import AddPatientForm
+from .forms import PatientForm
 from .models import Patient
 
 # Create your views here.
@@ -37,7 +37,7 @@ def dashboard(request: HttpRequest):
 
 @login_required(login_url='sign-in')
 def addPatient(request: HttpRequest):
-  form = AddPatientForm(request.POST)
+  form = PatientForm(request.POST)
   if request.method == 'POST':
     if form.is_valid():
       form.save()
@@ -45,9 +45,30 @@ def addPatient(request: HttpRequest):
     else:
       print(form.errors)
   else:
-    form = AddPatientForm()
+    form = PatientForm()
   context = { 'form': form }
   return render(request, 'pages/add-patient.html', context=context)
+
+@login_required(login_url='sign-in')
+def editPatient(request: HttpRequest, patientId: str):
+  patient = get_object_or_404(Patient, id=patientId)
+  form = PatientForm(instance=patient)
+  if request.method == 'POST':
+    form = PatientForm(data=request.POST, instance=patient)
+    if form.is_valid():
+      form.save()
+      messages.success(request=request, message='Patient updated successfully')
+    else:
+      print(form.errors)
+      print(form.errors)
+  context = { 'form': form }
+  return render(request, 'pages/edit-patient.html', context=context)
+
+@login_required(login_url='sign-in')
+def deletePatient(request: HttpRequest, patientId: str):
+  patient = get_object_or_404(Patient, id=patientId)
+  patient.delete()
+  return redirect('patient-list')
 
 @login_required(login_url='sign-in')
 def patientList(request: HttpRequest):
