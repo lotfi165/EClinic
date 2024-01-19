@@ -7,7 +7,6 @@
     <div class="drawer-content flex flex-col">
       <!-- Page content here -->
       {% include "components/navbar-dashboard.html" %}
-      <label for="main-drawer" class="btn btn-primary drawer-button lg:hidden">Open drawer</label>
       
       {% block dashboard_content %}
       {% endblock dashboard_content %}
@@ -16,8 +15,25 @@
       <label for="main-drawer" aria-label="close sidebar" class="drawer-overlay"></label> 
       <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
         <!-- Sidebar content here -->
-        <li><a>Sidebar Item 1</a></li>
-        <li><a>Sidebar Item 2</a></li>
+        <ul class="menu flex flex-1 w-full bg-base-200 rounded-box">
+          <li><a {% if request.path == '/dashboard/' %}class="bg-primary text-primary-content"{% endif %} href="{% url "dashboard" %}"><i class="fas fa-home"></i>Dashboard</a></li>
+          <li>
+            <details open>
+              <summary><i class="fas fa-user"></i>Patient</summary>
+              <ul>
+                <li><a {% if request.path == '/dashboard/patients/add' %}class="bg-primary text-primary-content"{% endif %} href="{% url "add-patient" %}"><i class="fas fa-plus"></i>Add patient</a></li>
+                <li><a {% if request.path == '/dashboard/patients' %}class="bg-primary text-primary-content"{% endif %} href="{% url "patient-list" %}"><i class="fas fa-list"></i>Patient list</a></li>
+              </ul>
+            </details>
+            <details open>
+              <summary><i class="fas fa-user-doctor"></i>Doctors</summary>
+              <ul>
+                <li><a><i class="fas fa-plus"></i>Add doctor</a></li>
+                <li><a><i class="fas fa-list"></i>Doctor list</a></li>
+              </ul>
+            </details>
+          </li>
+        </ul>
       </ul>
     
     </div>

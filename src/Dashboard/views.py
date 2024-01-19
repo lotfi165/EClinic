@@ -4,15 +4,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .decorators import login_not_required
+from .forms import AddPatientForm
+from .models import Patient
 
 # Create your views here.
 @login_not_required
 def index(request: HttpRequest):
   return render(request, 'pages/index.html')
-
-@login_required(login_url='sign-in')
-def dashboard(request: HttpRequest):
-  return render(request, 'pages/dashboard-home.html')
 
 @login_not_required
 def signIn(request: HttpRequest):
@@ -32,3 +30,26 @@ def signIn(request: HttpRequest):
 def signOut(request: HttpRequest):
   logout(request=request)
   return redirect('sign-in');
+
+@login_required(login_url='sign-in')
+def dashboard(request: HttpRequest):
+  return render(request, 'pages/dashboard-home.html')
+
+@login_required(login_url='sign-in')
+def addPatient(request: HttpRequest):
+  if request.method == 'POST':
+    inputForm = AddPatientForm(request.POST)
+    if inputForm.is_valid():
+      inputForm.save()
+      messages.success(request=request, message='Patient created successfully');
+    else:
+      print(inputForm.errors)
+  form = AddPatientForm()
+  context = { 'form': form }
+  return render(request, 'pages/add-patient.html', context=context)
+
+@login_required(login_url='sign-in')
+def patientList(request: HttpRequest):
+  patients = Patient.objects.all()
+  context = { 'patients': patients }
+  return render(request, 'pages/patient-list.html', context=context)

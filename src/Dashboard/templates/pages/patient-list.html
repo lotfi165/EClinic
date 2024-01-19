@@ -1,0 +1,56 @@
+{% extends "layouts/dashboard.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+  <title>Add patient</title>
+{% endblock head %} 
+
+{% block dashboard_content %}
+  <div class="flex flex-1 flex-col items-center pb-[5rem]">
+    <div class="flex flex-col max-w-[80%]">
+      <div class="text-[30pt] font-bold"><i class="fas fa-list text-primary mr-[1rem]"></i>Patient list</div>
+      {% if patients.count > 0 %}
+      <div class="overflow-x-auto">
+        <table class="table table-pin-rows table-pin-cols table-zebra">
+          <thead>
+            <tr>
+              <td></td>
+              <td>Id</td> 
+              <td>First name</td> 
+              <td>Last name</td> 
+              <td>Date of birth</td> 
+              <td>Adress</td> 
+              <td>Phone number</td>
+              <td>Email</td>
+              <td>Gender</td>
+              <td>Created at</td>
+              <td>Updated at</td>
+            </tr>
+          </thead> 
+          <tbody>
+            {% for patient in patients %}
+              <tr>
+                <td><button class="btn btn-primary"><i class="fas fa-pen"></i> Edit</button></td>
+                <td>{{patient.id}}</td> 
+                <td>{{patient.firstName}}</td> 
+                <td>{{patient.lastName}}</td> 
+                <td>{{patient.dateOfBirth}}</td> 
+                <td>{{patient.adress}}</td> 
+                <td>{{patient.phoneNumber}}</td>
+                <td>{{patient.email}}</td>
+                <td>{{patient.gender}}</td>
+                <td>{{patient.createdAt}}</td>
+                <td>{{patient.updatedAt}}</td>
+              </tr>
+            {% endfor %}
+          </tbody> 
+        </table>
+      </div>
+      {% else %}
+        <h1>No patient</h1>
+      {% endif %}
+      
+    </div>
+  </div>
+{% endblock dashboard_content %}
