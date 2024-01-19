@@ -24,6 +24,13 @@
         {% endfor %}
       {% endif %}
 
+      {% if form.errors %}
+        <div role="alert" class="alert alert-error mt-[1rem]">
+          <i class="fas fa-times"></i>
+          <span>{{form.errors}}</span>
+        </div>
+      {% endif %}
+
       <label class="form-control w-full">
         <div class="label">
           <span class="label-text">First name</span>

@@ -37,14 +37,15 @@ def dashboard(request: HttpRequest):
 
 @login_required(login_url='sign-in')
 def addPatient(request: HttpRequest):
+  form = AddPatientForm(request.POST)
   if request.method == 'POST':
-    inputForm = AddPatientForm(request.POST)
-    if inputForm.is_valid():
-      inputForm.save()
-      messages.success(request=request, message='Patient created successfully');
+    if form.is_valid():
+      form.save()
+      messages.success(request=request, message='Patient created successfully')
     else:
-      print(inputForm.errors)
-  form = AddPatientForm()
+      print(form.errors)
+  else:
+    form = AddPatientForm()
   context = { 'form': form }
   return render(request, 'pages/add-patient.html', context=context)
 
