@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block content %}
-  <div class="drawer lg:drawer-open">
+  <div class="drawer lg:drawer-open flex-1">
     <input id="main-drawer" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content flex flex-col">
+    <div class="drawer-content flex flex-1 flex-col">
       <!-- Page content here -->
       {% include "components/navbar-dashboard.html" %}
       
@@ -19,17 +19,38 @@
           <li><a {% if request.path == '/dashboard/' %}class="bg-primary text-primary-content"{% endif %} href="{% url "dashboard" %}"><i class="fas fa-home"></i>Dashboard</a></li>
           <li>
             <details open>
-              <summary><i class="fas fa-user"></i>Patient</summary>
+              <summary class="text-[15pt] mt-[1rem]"><i class="fas fa-user"></i>Patient</summary>
               <ul>
                 <li><a {% if request.path == '/dashboard/patients/add' %}class="bg-primary text-primary-content"{% endif %} href="{% url "add-patient" %}"><i class="fas fa-plus"></i>Add patient</a></li>
                 <li><a {% if request.path == '/dashboard/patients' %}class="bg-primary text-primary-content"{% endif %} href="{% url "patient-list" %}"><i class="fas fa-list"></i>Patient list</a></li>
               </ul>
             </details>
             <details open>
-              <summary><i class="fas fa-user-doctor"></i>Doctors</summary>
+              <summary class="text-[15pt] mt-[1rem]"><i class="fas fa-user-doctor"></i>Doctors</summary>
               <ul>
                 <li><a><i class="fas fa-plus"></i>Add doctor</a></li>
                 <li><a><i class="fas fa-list"></i>Doctor list</a></li>
+              </ul>
+            </details>
+            <details open>
+              <summary class="text-[15pt] mt-[1rem]"><i class="fas fa-building"></i>Departments</summary>
+              <ul>
+                <li><a><i class="fas fa-plus"></i>Add department</a></li>
+                <li><a><i class="fas fa-list"></i>Department list</a></li>
+              </ul>
+            </details>
+            <details open>
+              <summary class="text-[15pt] mt-[1rem]"><i class="fas fa-id-card-clip"></i>Specialities</summary>
+              <ul>
+                <li><a><i class="fas fa-plus"></i>Add speciality</a></li>
+                <li><a><i class="fas fa-list"></i>Speciality list</a></li>
+              </ul>
+            </details>
+            <details open>
+              <summary class="text-[15pt] mt-[1rem]"><i class="fas fa-file-powerpoint"></i>Procedures</summary>
+              <ul>
+                <li><a><i class="fas fa-plus"></i>Add procedure</a></li>
+                <li><a><i class="fas fa-list"></i>Procedure list</a></li>
               </ul>
             </details>
           </li>

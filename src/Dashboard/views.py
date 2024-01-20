@@ -4,8 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .decorators import login_not_required
-from .forms import PatientForm
-from .models import Patient
+from .forms import PatientForm, MedicalHistoryForm
+from .models import Patient, MedicalHistory
 
 # Create your views here.
 @login_not_required
@@ -40,7 +40,8 @@ def addPatient(request: HttpRequest):
   form = PatientForm(request.POST)
   if request.method == 'POST':
     if form.is_valid():
-      form.save()
+      patient = form.save()
+      MedicalHistory.objects.create(patient=patient);
       messages.success(request=request, message='Patient created successfully')
     else:
       print(form.errors)
@@ -58,11 +59,24 @@ def editPatient(request: HttpRequest, patientId: str):
     if form.is_valid():
       form.save()
       messages.success(request=request, message='Patient updated successfully')
-    else:
-      print(form.errors)
-      print(form.errors)
   context = { 'form': form }
   return render(request, 'pages/edit-patient.html', context=context)
+
+@login_required(login_url='sign-in')
+def editMedicalHistory(request: HttpRequest, patientId: str):
+  patient = get_object_or_404(Patient, id=patientId)
+  medicalHistory = get_object_or_404(MedicalHistory, patient=patient)
+  form = MedicalHistoryForm(instance=medicalHistory, initial={'patient': patient})
+  if request.method == 'POST':
+    data = request.POST.copy() 
+    data.appendlist('patient', patient)
+    print(data)
+    form = MedicalHistoryForm(data=data, instance=medicalHistory)
+    if form.is_valid():
+      form.save()
+      messages.success(request=request, message='Medical history updated successfully')
+  context = { 'form': form, 'patient': patient }
+  return render(request, 'pages/edit-medical-history.html', context=context)
 
 @login_required(login_url='sign-in')
 def deletePatient(request: HttpRequest, patientId: str):

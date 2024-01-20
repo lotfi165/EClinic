@@ -30,11 +30,11 @@ class Patient(models.Model):
 class MedicalHistory(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   patient = models.OneToOneField('Patient', on_delete=models.CASCADE)
-  notes = models.TextField()
-  allergies = models.TextField()
-  surgeries = models.TextField()
-  medications = models.TextField()
-  updatedAt = models.DateTimeField(auto_now=True)
+  notes = models.TextField(null=True, blank=True)
+  allergies = models.TextField(null=True, blank=True)
+  surgeries = models.TextField(null=True, blank=True)
+  medications = models.TextField(null=True, blank=True)
+  updatedAt = models.DateTimeField(auto_now=True, blank=True)
 
 class Doctor(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

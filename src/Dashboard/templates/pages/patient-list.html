@@ -8,10 +8,10 @@
 
 {% block dashboard_content %}
   <div class="flex flex-1 flex-col items-center pb-[5rem]">
-    <div class="flex flex-1 flex-col max-w-[80%] justify-start w-full">
+    <div class="flex flex-1 flex-col max-w-[90%] lg:max-w-[80%] justify-start w-full">
       <div class="text-[30pt] font-bold"><i class="fas fa-list text-primary mr-[1rem]"></i>Patient list</div>
       {% if patients.count > 0 %}
-      <div class="overflow-x-auto">
+      <div class="overflow-x-auto flex-1 flex items-start">
         <table class="table table-pin-rows table-pin-cols table-zebra">
           <thead>
             <tr>
@@ -32,9 +32,13 @@
             {% for patient in patients %}
               <tr>
                 <td>
-                  <div class="flex">
-                    <a href="{% url "edit-patient" patientId=patient.id %}"><button class="btn btn-primary join-item"><i class="fas fa-pen"></i></button></a>
-                    <button class="btn btn-error ml-[0.5rem]" onclick="modal_{{forloop.counter}}.showModal()"><i class="fas fa-trash"></i></button>
+                  <div class="dropdown">
+                    <div tabindex="0" role="button" class="btn btn-primary m-1"><i class="fas fa-ellipsis"></i></div>
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-2xl bg-base-100 rounded-box w-52">
+                      <li><a href="{% url "edit-medical-history" patientId=patient.id %}"><i class="fas fa-clock-rotate-left"></i>History</a></li>
+                      <li><a href="{% url "edit-patient" patientId=patient.id %}"><i class="fas fa-pen"></i>Edit</a></li>
+                      <li><a class="text-error" onclick="modal_{{forloop.counter}}.showModal()"><i class="fas fa-trash"></i>Delete</a></li>
+                    </ul>
                   </div>
                   <dialog id="modal_{{forloop.counter}}" class="modal">
                     <div class="modal-box">
