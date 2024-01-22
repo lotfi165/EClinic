@@ -27,6 +27,9 @@ class Patient(models.Model):
   createdAt = models.DateTimeField(auto_now_add=True)
   updatedAt = models.DateTimeField(auto_now=True)
 
+  def __str__(self):
+     return f"{self.lastName} {self.firstName}"
+
 class MedicalHistory(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   patient = models.OneToOneField('Patient', on_delete=models.CASCADE)
@@ -50,18 +53,30 @@ class Doctor(models.Model):
   createdAt = models.DateTimeField(auto_now_add=True)
   updatedAt = models.DateTimeField(auto_now=True)
 
+  def __str__(self):
+     return f"{self.lastName} {self.firstName}"
+
 class Department(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   name = models.CharField(max_length=256, null=False, unique=True)
+
+  def __str__(self):
+     return f"{self.name}"
 
 class Speciality(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   name = models.CharField(max_length=256, null=False, unique=True)
 
+  def __str__(self):
+     return f"{self.name}"
+
 class Procedure(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   name = models.CharField(max_length=256, null=False, unique=True)
   type = models.CharField(max_length=15, choices=ProcedureType.choices)
+
+  def __str__(self):
+     return f"{self.name}"
 
 class Appointment(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
