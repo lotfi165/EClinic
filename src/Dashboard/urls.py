@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import presentation, auth, patient, doctor, department, speciality, procedures
+from .views import presentation, auth, patient, doctor, department, speciality, procedures, appointement
 
 urlpatterns = [
   path('', presentation.index, name='index'),
@@ -33,4 +33,7 @@ urlpatterns = [
   path('dashboard/procedures/add', procedures.addProcedure, name='add-procedure'),
   path('dashboard/procedures/edit/<str:procedureId>/', procedures.editProcedure, name='edit-procedure'),
   path('dashboard/procedures/delete/<str:procedureId>/', procedures.deleteProcedure, name='delete-procedure'),
+
+  path('dashboard/appointments/patient/<str:patientId>/add', appointement.addAppointement, name='add-appointment'),
+  path('dashboard/appointments/edit/<str:patientId>', appointement.editAppointment, name='edit-appointment'),
 ]

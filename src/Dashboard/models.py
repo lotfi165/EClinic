@@ -80,10 +80,11 @@ class Procedure(models.Model):
 
 class Appointment(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-  doctors = models.ManyToManyField('Doctor')
-  procedures = models.ManyToManyField('Procedure')
+  patient = models.ForeignKey('Patient', on_delete=models.CASCADE)
+  doctors = models.ManyToManyField('Doctor', blank=True)
+  procedures = models.ManyToManyField('Procedure', blank=True)
   timestamp = models.DateTimeField()
-  state = models.CharField(max_length=10, choices=AppointmentState.choices)
+  state = models.CharField(max_length=10, choices=AppointmentState.choices, default=AppointmentState.SCHEDULED, blank=True)
   createdAt = models.DateTimeField(auto_now_add=True)
   updatedAt = models.DateTimeField(auto_now=True)
 

@@ -40,7 +40,6 @@ def editMedicalHistory(request: HttpRequest, patientId: str):
   if request.method == 'POST':
     data = request.POST.copy() 
     data.appendlist('patient', patient)
-    print(data)
     form = MedicalHistoryForm(data=data, instance=medicalHistory)
     if form.is_valid():
       form.save()
