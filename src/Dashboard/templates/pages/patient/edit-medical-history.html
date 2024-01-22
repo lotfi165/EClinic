@@ -12,7 +12,7 @@
       {% csrf_token %}
   
       <div class="text-[30pt] font-bold"><i class="fas fa-clock-rotate-left text-primary mr-[1rem]"></i>Edit medical history</div>
-      <div class="text-[15pt] font-semibold ml-[1rem]"><i class="fas fa-user text-primary mr-[1rem]"></i>Patient: {{patient.firstName}} {{patient.lastName}}</div>
+      <div class="text-[15pt] font-semibold ml-[1rem] mb-[1rem]"><i class="fas fa-user text-primary mr-[1rem]"></i>Patient: {{patient.firstName}} {{patient.lastName}}</div>
 
       {% if messages %}
         {% for message in messages %}

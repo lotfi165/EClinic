@@ -1,13 +1,39 @@
-from django.forms import ModelForm, TextInput
-from .models import Patient, MedicalHistory
+from django import forms
+from .models import Patient, MedicalHistory, Doctor, Department, Speciality, Procedure
 
-class PatientForm(ModelForm):
-    class Meta:
-        model = Patient
-        fields = '__all__'
+class SignInForm(forms.Form):
+  username = forms.CharField()
+  password = forms.CharField()
 
-class MedicalHistoryForm(ModelForm):
-    
-    class Meta:
-        model = MedicalHistory
-        fields = '__all__'
+class SearchForm(forms.Form):
+  search  = forms.CharField(required=False)
+
+class PatientForm(forms.ModelForm):
+  class Meta:
+    model = Patient
+    fields = '__all__'
+
+class MedicalHistoryForm(forms.ModelForm):
+  class Meta:
+    model = MedicalHistory
+    fields = '__all__'
+
+class DoctorForm(forms.ModelForm):
+  class Meta:
+    model = Doctor
+    fields = '__all__'
+
+class DepartmentForm(forms.ModelForm):
+  class Meta:
+    model = Department
+    fields = '__all__'
+
+class SpecialityForm(forms.ModelForm):
+  class Meta:
+    model = Speciality
+    fields = '__all__'
+
+class ProcedureForm(forms.ModelForm):
+  class Meta:
+    model = Procedure
+    fields = '__all__'

@@ -1,5 +1,6 @@
 {% extends "layouts/base.html" %} 
 {% load static %}
+{% load widget_tweaks %}
 
 {% block head %}
   <title>Welcome to E-Clinic</title>
@@ -16,17 +17,17 @@
           <form class="flex flex-1 flex-col w-full" method="post">
             {% csrf_token %}
 
-            <label class="flex w-full form-control">
+            <label class="form-control w-full">
               <div class="label">
-                <span class="label-text"><i class="fas fa-user mr-[0.5rem]"></i> Username</span>
+                <span class="label-text"><i class="fas fa-user"></i> Username</span>
               </div>
-              <input name="username" type="text" placeholder="Username" class="input input-bordered w-full" />
+              {% render_field form.username placeholder="Username" class+="input input-bordered w-full" %}
             </label>
-            <label class="flex w-full form-control">
+            <label class="form-control w-full">
               <div class="label">
-                <span class="label-text"><i class="fas fa-key mr-[0.5rem]"></i>Password</span>
+                <span class="label-text"><i class="fas fa-key"></i> Password</span>
               </div>
-              <input name="password" type="password" placeholder="Password" class="input input-bordered w-full" />
+              {% render_field form.password placeholder="Password" type="password" class+="input input-bordered w-full" %}
             </label>
 
             {% if messages %}

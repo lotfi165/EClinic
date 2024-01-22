@@ -38,8 +38,8 @@ class MedicalHistory(models.Model):
 
 class Doctor(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-  department = models.OneToOneField('Department', on_delete=models.CASCADE)
-  speciality = models.OneToOneField('Speciality', on_delete=models.CASCADE)
+  department = models.ForeignKey('Department', on_delete=models.CASCADE)
+  speciality = models.ForeignKey('Speciality', on_delete=models.CASCADE)
   firstName = models.CharField(max_length=256, null=False)
   lastName = models.CharField(max_length=256, null=False)
   dateOfBirth = models.DateField(null=False)
