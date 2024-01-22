@@ -21,7 +21,7 @@ def signIn(request: HttpRequest):
         messages.error(request=request, message="Wrong username or password")
 
   context = { 'form': form }
-  return render(request, 'pages/sign-in.html', context=context)
+  return render(request, 'pages/auth/sign-in.html', context=context)
 
 @login_required(login_url='sign-in')
 def signOut(request: HttpRequest):

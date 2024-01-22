@@ -2318,16 +2318,20 @@ html {
   margin: 0.25rem;
 }
 
+.mb-\[1rem\] {
+  margin-bottom: 1rem;
+}
+
 .mb-\[2rem\] {
   margin-bottom: 2rem;
 }
 
-.ml-\[1rem\] {
-  margin-left: 1rem;
+.ml-\[0\.5rem\] {
+  margin-left: 0.5rem;
 }
 
-.mr-\[0\.5rem\] {
-  margin-right: 0.5rem;
+.ml-\[1rem\] {
+  margin-left: 1rem;
 }
 
 .mr-\[1rem\] {
@@ -2344,14 +2348,6 @@ html {
 
 .mt-\[3rem\] {
   margin-top: 3rem;
-}
-
-.mb-\[1rem\] {
-  margin-bottom: 1rem;
-}
-
-.ml-\[0\.5rem\] {
-  margin-left: 0.5rem;
 }
 
 .block {

@@ -6,8 +6,8 @@ from ..decorators import login_not_required
 # Create your views here.
 @login_not_required
 def index(request: HttpRequest):
-  return render(request, 'pages/index.html')
+  return render(request, 'pages/presentation/index.html')
 
 @login_required(login_url='sign-in')
 def dashboard(request: HttpRequest):
-  return render(request, 'pages/dashboard-home.html')
+  return render(request, 'pages/presentation/dashboard-home.html')

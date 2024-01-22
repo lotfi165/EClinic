@@ -52,15 +52,15 @@ class Doctor(models.Model):
 
 class Department(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-  name = models.CharField(max_length=256, null=False)
+  name = models.CharField(max_length=256, null=False, unique=True)
 
 class Speciality(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-  name = models.CharField(max_length=256, null=False)
+  name = models.CharField(max_length=256, null=False, unique=True)
 
 class Procedure(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-  name = models.CharField(max_length=256, null=False)
+  name = models.CharField(max_length=256, null=False, unique=True)
   type = models.CharField(max_length=15, choices=ProcedureType.choices)
 
 class Appointment(models.Model):

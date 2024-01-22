@@ -14,8 +14,6 @@ def addDoctor(request: HttpRequest):
     if form.is_valid():
       form.save()
       messages.success(request=request, message='Doctor created successfully')
-    else:
-      print(form.errors)
   else:
     form = DoctorForm()
   context = { 'form': form }

@@ -15,8 +15,6 @@ def addPatient(request: HttpRequest):
       patient = form.save()
       MedicalHistory.objects.create(patient=patient)
       messages.success(request=request, message='Patient created successfully')
-    else:
-      print(form.errors)
   else:
     form = PatientForm()
   context = { 'form': form }
