@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from ..forms import AppointmentForm, SearchForm, ProcedureApplicationForm
+from ..forms import AppointmentForm, SearchForm
 from ..models import Patient, Appointment, Doctor, ProcedureApplication
 from django.db.models import Q
 
@@ -26,7 +26,7 @@ def addAppointement(request: HttpRequest, patientId: str):
 def editAppointment(request: HttpRequest, appointmentId: str):
   appointment = get_object_or_404(Appointment, id=appointmentId)
   patient = get_object_or_404(Patient, id=appointment.patient.id)
-  procedureApplications = ProcedureApplication.objects.filter(appointment=appointment.id)
+  procedureApplications = ProcedureApplication.objects.filter(appointment=appointment.id).order_by('procedure')
   form = AppointmentForm(instance=appointment, initial={'patient': patient})
   if request.method == 'POST':
     data = request.POST.copy() 
@@ -37,33 +37,6 @@ def editAppointment(request: HttpRequest, appointmentId: str):
       messages.success(request=request, message='Appointment updated successfully')
   context = { 'form': form, 'patient': patient, 'procedureApplications': procedureApplications, 'appointment': appointment }
   return render(request, 'pages/appointment/edit-appointment.html', context=context)
-
-@login_required(login_url='sign-in')
-def applyProcedure(request: HttpRequest, appointmentId: str):
-  appointment = get_object_or_404(Appointment, id=appointmentId)
-  patient = get_object_or_404(Patient, id=appointment.patient.id)
-  form = ProcedureApplicationForm(initial={'appointment': appointment})
-  searchForm = SearchForm(request.GET)
-  doctor = None
-  doctors = []
-
-  if request.method == 'POST':
-    if request.POST.get('submit'):
-      data = request.POST.copy() 
-      data.appendlist('appointment', appointment)
-      form = ProcedureApplicationForm(data=data)
-      if form.is_valid():
-        form.save()
-        messages.success(request=request, message='Procedure applied successfully')
-        return redirect('edit-appointment', appointmentId=appointment.id)
-    else:
-      print(request.POST.get('doctor'))
-      pass
-
-  
-
-  context = { 'form': form, 'searchForm': searchForm, 'patient': patient, 'appointment': appointment, 'doctor': doctor, 'doctors': doctors }
-  return render(request, 'pages/appointment/apply-procedure.html', context=context)
 
 @login_required(login_url='sign-in')
 def deleteAppointment(request: HttpRequest, appointmentId: str):

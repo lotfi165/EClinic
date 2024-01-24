@@ -15,7 +15,6 @@
         <div class="text-[30pt] font-bold"><i class="fas fa-pen text-primary mr-[1rem]"></i>Edit appointment</div>
         <div class="text-[15pt] font-semibold ml-[1rem] mb-[1rem]"><i class="fas fa-user text-primary mr-[1rem]"></i>Patient: {{patient.firstName}} {{patient.lastName}}</div>
   
-        {{procedureApplications}}
         {% if messages %}
           {% for message in messages %}
             {% if message.tags == 'success' %}
@@ -50,17 +49,91 @@
       </a>
      
 
-      <div class="text-[25pt] font-bold mt-[5rem]"><i class="fas fa-list-check text-primary mr-[1rem]"></i>Applied procedures</div>
-      {% if procedures.count > 0 %}
-          {% for procedure in procedures %}
-            <h1>lol</h1>
-          {% endfor %}
-        {% else %}
-          <div class="flex flex-col items-center mt-[5rem]">
-            <img class="w-[30%]" src="{% static "assets/empty-list.svg" %}" alt="empty-list">
-            <div class="text-[20pt]">No procedures applied</div>
+      <div class="text-[25pt] font-bold my-[2rem]"><i class="fas fa-list-check text-primary mr-[1rem]"></i>Applied procedures</div>
+      {% if procedureApplications.count > 0 %}
+        {% regroup procedureApplications by procedure.name as procedureList %}
+        {% for procedure in procedureList %}
+          <div class="flex flex-col p-[0.5rem] bg-base-300 mb-[1rem] rounded-xl">
+            <div class="flex justify-between items-center bg-base-100 p-[0.5rem] rounded-md">
+              <div class="ml-[1rem] font-bold text-[15pt]">{{procedure.grouper}}</div>
+            </div>
+            
+
+            <div class="flex flex-col bg-base-100 rounded-lg p-[1rem] mt-[0.5rem]">
+              <div class="text-[20pt] font-bold my-[0.5rem]"><i class="fas fa-list-check text-primary mr-[1rem]"></i>Doctors</div>
+              <div class="overflow-x-auto flex-1 flex items-start">
+                <table class="table table-pin-rows table-pin-cols table-zebra">
+                  <thead>
+                    <tr>
+                      <td></td>
+                      <td>Id</td> 
+                      <td>Department</td>
+                      <td>Speciality</td>
+                      <td>First name</td> 
+                      <td>Last name</td> 
+                      <td>Date of birth</td> 
+                      <td>Adress</td> 
+                      <td>Phone number</td>
+                      <td>Email</td>
+                      <td>Gender</td>
+                      <td>Created at</td>
+                      <td>Updated at</td>
+                    </tr>
+                  </thead> 
+                  <tbody>
+                    {% for procedureApplication in procedure.list %}
+                      <tr>
+                        <td>
+                          <div class="dropdown">
+                            <div tabindex="0" role="button" class="btn btn-primary m-1"><i class="fas fa-ellipsis"></i></div>
+                            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-2xl bg-base-200 rounded-box w-52">
+                              <li><a class="text-error" onclick="modal_{{forloop.counter}}.showModal()"><i class="fas fa-trash"></i>Delete</a></li>
+                            </ul>
+                          </div>
+                          <dialog id="modal_{{forloop.counter}}" class="modal">
+                            <div class="modal-box">
+                              <h3 class="font-bold text-lg">Delete confirmation</h3>
+                              <p class="py-4">Are you sure you want the procedure application "{{procedure.grouper}}" done by "{{procedureApplication.doctor.firstName}} {{procedureApplication.doctor.lastName}}"</p>
+                              <div class="modal-action">
+                                <form action="{% url "delete-procedure-application" procedureApplicationId=procedureApplication.id %}" method="post">
+                                  {% csrf_token %}
+                                  <button class="btn btn-error">Delete</button>
+                                </form>
+                                <form method="dialog">
+                                  <button class="btn">Close</button>
+                                </form>
+                              </div>
+                            </div>
+                          </dialog>   
+                        </td>
+                        <td>{{procedureApplication.doctor.id}}</td> 
+                        <td>{{procedureApplication.doctor.department}}</td>
+                        <td>{{procedureApplication.doctor.speciality}}</td>
+                        <td>{{procedureApplication.doctor.firstName}}</td> 
+                        <td>{{procedureApplication.doctor.lastName}}</td> 
+                        <td>{{procedureApplication.doctor.dateOfBirth}}</td> 
+                        <td>{{procedureApplication.doctor.adress}}</td> 
+                        <td>{{procedureApplication.doctor.phoneNumber}}</td>
+                        <td>{{procedureApplication.doctor.email}}</td>
+                        <td>{{procedureApplication.doctor.gender}}</td>
+                        <td>{{procedureApplication.doctor.createdAt}}</td>
+                        <td>{{procedureApplication.doctor.updatedAt}}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody> 
+                </table>
+              </div>
+            </div>
+
+
           </div>
-        {% endif %}
+        {% endfor %}
+      {% else %}
+        <div class="flex flex-col items-center mt-[5rem]">
+          <img class="w-[30%]" src="{% static "assets/empty-list.svg" %}" alt="empty-list">
+          <div class="text-[20pt]">No procedures applied</div>
+        </div>
+      {% endif %}
     </div>
   </div>
 {% endblock dashboard_content %}

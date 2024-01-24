@@ -9,12 +9,60 @@
 {% block dashboard_content %}
   <div class="flex flex-1 flex-col items-center pb-[5rem]">
     <div class="w-[90%] max-w-[50rem]">
+      <div class="text-[30pt] font-bold"><i class="fas fa-plus text-primary mr-[1rem]"></i>Apply procedure</div>
+      <div class="text-[15pt] font-semibold ml-[1rem] mb-[1rem] mt-[1rem]"><i class="fas fa-user text-primary mr-[1rem]"></i>Patient: {{patient.firstName}} {{patient.lastName}}</div>
+      <div class="text-[15pt] font-semibold ml-[1rem] mb-[1rem]"><i class="fas fa-clock text-primary mr-[1rem]"></i>Appointment of: {{appointment.timestamp}}</div>
+
+      {% if doctor != None %}
+        <div class="overflow-x-auto flex-1 flex items-start">
+          <table class="table table-pin-rows table-pin-cols table-zebra">
+            <thead>
+              <tr>
+                <td></td>
+                <td>Id</td> 
+                <td>Department</td>
+                <td>Speciality</td>
+                <td>First name</td> 
+                <td>Last name</td> 
+                <td>Date of birth</td> 
+                <td>Adress</td> 
+                <td>Phone number</td>
+                <td>Email</td>
+                <td>Gender</td>
+                <td>Created at</td>
+                <td>Updated at</td>
+              </tr>
+            </thead> 
+            <tbody>
+              <tr>
+                <td>
+                  <form action="" method="post">
+                    {% csrf_token %}
+                    {% render_field assignDoctorForm.doctorId hidden="true" placeholder="Search doctors" value=doctor.id type="text" class+="input input-bordered w-full" %}
+                    {% render_field assignDoctorForm.remove hidden="true" checked="true" id="remove-doctor" %}
+                    <button class="btn btn-error min-w-[7rem]"><i class="fas fa-trash"></i> Unselect</button>
+                  </form>
+                </td>
+                <td>{{doctor.id}}</td> 
+                <td>{{doctor.department}}</td>
+                <td>{{doctor.speciality}}</td>
+                <td>{{doctor.firstName}}</td> 
+                <td>{{doctor.lastName}}</td> 
+                <td>{{doctor.dateOfBirth}}</td> 
+                <td>{{doctor.adress}}</td> 
+                <td>{{doctor.phoneNumber}}</td>
+                <td>{{doctor.email}}</td>
+                <td>{{doctor.gender}}</td>
+                <td>{{doctor.createdAt}}</td>
+                <td>{{doctor.updatedAt}}</td>
+              </tr>
+            </tbody> 
+          </table>
+        </div>
+      {% endif %}
+
       <form class="flex flex-1 flex-col" action="" method="post">
         {% csrf_token %}
-    
-        <div class="text-[30pt] font-bold"><i class="fas fa-plus text-primary mr-[1rem]"></i>Apply procedure</div>
-        <div class="text-[15pt] font-semibold ml-[1rem] mb-[1rem] mt-[1rem]"><i class="fas fa-user text-primary mr-[1rem]"></i>Patient: {{patient.firstName}} {{patient.lastName}}</div>
-        <div class="text-[15pt] font-semibold ml-[1rem] mb-[1rem]"><i class="fas fa-clock text-primary mr-[1rem]"></i>Appointment of: {{appointment.timestamp}}</div>
   
         {% if messages %}
           {% for message in messages %}
@@ -34,7 +82,7 @@
           </div>
         {% endif %}
   
-        {{form.as_p}}
+        
         <label class="form-control w-full">
           <div class="label">
             <span class="label-text">Procedure</span>
@@ -42,104 +90,91 @@
           {% render_field form.procedure class+="select select-bordered" %}
         </label>
         {% if doctor != None %}
-          <select name="doctor" required="" id="id_doctor">
+          <select name="doctor" required="" id="id_doctor" hidden>
             <option value="{{doctor.id}}">{{doctor.firstName}}</option>
           </select>
         {% endif %}
+        <input type="text" name="confirm" value="true" hidden>
   
         <button class="btn btn-primary mt-[2rem]"><i class="fas fa-plus"></i>Apply procedure</button>
       </form>
   
   
-      <div class="flex flex-1 flex-col items-center pb-[5rem] mt-[2rem]">
-        <div class="flex flex-1 flex-col justify-start w-full">
-          <div class="text-[23pt] font-bold"><i class="fas fa-list text-primary mr-[1rem]"></i>Select a doctor</div>
-    
-          <form action="" method="get" class="mb-[1rem]">
-            <label class="form-control w-full">
-              <div class="label">
-                <span class="label-text"><i class="fas fa-search"></i> Search</span>
-              </div>
-              <div class="flex">
-                {% render_field searchForm.search placeholder="Search doctors" type="text" class+="input input-bordered w-full" %}
-                <button class="btn btn-primary ml-[0.5rem]"><i class="fas fa-search"></i></button>
-              </div>
-            </label>
-          </form>
-    
-          {% if doctors.count > 0 %}
-          <div class="overflow-x-auto flex-1 flex items-start">
-            <table class="table table-pin-rows table-pin-cols table-zebra">
-              <thead>
-                <tr>
-                  <td></td>
-                  <td>Id</td> 
-                  <td>Department</td>
-                  <td>Speciality</td>
-                  <td>First name</td> 
-                  <td>Last name</td> 
-                  <td>Date of birth</td> 
-                  <td>Adress</td> 
-                  <td>Phone number</td>
-                  <td>Email</td>
-                  <td>Gender</td>
-                  <td>Created at</td>
-                  <td>Updated at</td>
-                </tr>
-              </thead> 
-              <tbody>
-                {% for doctor in doctors %}
+      {% if doctor == None %}
+        <div class="flex flex-1 flex-col items-center pb-[5rem] mt-[2rem]">
+          <div class="flex flex-1 flex-col justify-start w-full">
+            <div class="text-[23pt] font-bold"><i class="fas fa-list text-primary mr-[1rem]"></i>Select a doctor</div>
+      
+            <form action="" method="get" class="mb-[1rem]">
+              <label class="form-control w-full">
+                <div class="label">
+                  <span class="label-text"><i class="fas fa-search"></i> Search</span>
+                </div>
+                <div class="flex">
+                  {% render_field searchForm.search placeholder="Search doctors" type="text" class+="input input-bordered w-full" %}
+                  <button class="btn btn-primary ml-[0.5rem]"><i class="fas fa-search"></i></button>
+                </div>
+              </label>
+            </form>
+      
+            {% if doctors.count > 0 %}
+            <div class="overflow-x-auto flex-1 flex items-start">
+              <table class="table table-pin-rows table-pin-cols table-zebra">
+                <thead>
                   <tr>
-                    <td>
-                      <div class="dropdown">
-                        <div tabindex="0" role="button" class="btn btn-primary m-1"><i class="fas fa-ellipsis"></i></div>
-                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-2xl bg-base-200 rounded-box w-52">
-                          <li><a href="{% url "edit-doctor" doctorId=doctor.id %}"><i class="fas fa-pen"></i>Edit</a></li>
-                          <li><a class="text-error" onclick="modal_{{forloop.counter}}.showModal()"><i class="fas fa-trash"></i>Delete</a></li>
-                        </ul>
-                      </div>
-                      <dialog id="modal_{{forloop.counter}}" class="modal">
-                        <div class="modal-box">
-                          <h3 class="font-bold text-lg">Delete confirmation</h3>
-                          <p class="py-4">Are you sure you want to delete doctor "{{doctor.firstName}} {{doctor.lastName}}"</p>
-                          <div class="modal-action">
-                            <form action="{% url "delete-doctor" doctorId=doctor.id %}" method="post">
-                              {% csrf_token %}
-                              <button class="btn btn-error">Delete</button>
-                            </form>
-                            <form method="dialog">
-                              <button class="btn">Close</button>
-                            </form>
-                          </div>
-                        </div>
-                      </dialog>   
-                    </td>
-                    <td>{{doctor.id}}</td> 
-                    <td>{{doctor.department}}</td>
-                    <td>{{doctor.speciality}}</td>
-                    <td>{{doctor.firstName}}</td> 
-                    <td>{{doctor.lastName}}</td> 
-                    <td>{{doctor.dateOfBirth}}</td> 
-                    <td>{{doctor.adress}}</td> 
-                    <td>{{doctor.phoneNumber}}</td>
-                    <td>{{doctor.email}}</td>
-                    <td>{{doctor.gender}}</td>
-                    <td>{{doctor.createdAt}}</td>
-                    <td>{{doctor.updatedAt}}</td>
+                    <td></td>
+                    <td>Id</td> 
+                    <td>Department</td>
+                    <td>Speciality</td>
+                    <td>First name</td> 
+                    <td>Last name</td> 
+                    <td>Date of birth</td> 
+                    <td>Adress</td> 
+                    <td>Phone number</td>
+                    <td>Email</td>
+                    <td>Gender</td>
+                    <td>Created at</td>
+                    <td>Updated at</td>
                   </tr>
-                {% endfor %}
-              </tbody> 
-            </table>
-          </div>
-          {% else %}
-            <div class="flex flex-1 flex-col justify-center items-center h-full w-full">
-              <img class="w-[30%]" src="{% static "assets/empty-list.svg" %}" alt="empty-list">
-              <div class="text-[20pt]">The list is empty</div>
+                </thead> 
+                <tbody>
+                  {% for doctor in doctors %}
+                    <tr>
+                      <td>
+                        <form action="" method="post">
+                          {% csrf_token %}
+                          {% render_field assignDoctorForm.doctorId hidden="true" placeholder="Search doctors" value=doctor.id type="text" class+="input input-bordered w-full" %}
+                          {% render_field assignDoctorForm.remove hidden="true" id="assign-doctor"  %}
+                          <button class="btn btn-primary min-w-[7rem]"><i class="fas fa-check"></i> Select</button>
+                        </form>
+                      </td>
+                      <td>{{doctor.id}}</td> 
+                      <td>{{doctor.department}}</td>
+                      <td>{{doctor.speciality}}</td>
+                      <td>{{doctor.firstName}}</td> 
+                      <td>{{doctor.lastName}}</td> 
+                      <td>{{doctor.dateOfBirth}}</td> 
+                      <td>{{doctor.adress}}</td> 
+                      <td>{{doctor.phoneNumber}}</td>
+                      <td>{{doctor.email}}</td>
+                      <td>{{doctor.gender}}</td>
+                      <td>{{doctor.createdAt}}</td>
+                      <td>{{doctor.updatedAt}}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody> 
+              </table>
             </div>
-          {% endif %}
-          
+            {% else %}
+              <div class="flex flex-1 flex-col justify-center items-center h-full w-full">
+                <img class="w-[30%]" src="{% static "assets/empty-list.svg" %}" alt="empty-list">
+                <div class="text-[20pt]">The list is empty</div>
+              </div>
+            {% endif %}
+            
+          </div>
         </div>
-      </div>
+      {% endif %}
     </div>
   </div>
 {% endblock dashboard_content %}

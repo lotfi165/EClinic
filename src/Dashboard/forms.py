@@ -44,7 +44,8 @@ class ProcedureApplicationForm(forms.ModelForm):
     fields = '__all__'
 
 class AssignDoctorForm(forms.Form):
-  id = forms.CharField()
+  doctorId = forms.CharField()
+  remove = forms.BooleanField(required=False)
 
 class AppointmentForm(forms.ModelForm):
   class Meta:

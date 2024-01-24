@@ -79,10 +79,14 @@ class Procedure(models.Model):
      return f"{self.name}"
   
 class ProcedureApplication(models.Model):
+  id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   appointment = models.ForeignKey('Appointment', on_delete=models.CASCADE)
   doctor = models.ForeignKey('Doctor', on_delete=models.CASCADE)
   procedure = models.ForeignKey('Procedure', on_delete=models.CASCADE)
-  report = models.TextField()
+  report = models.TextField(null=True, blank=True)
+
+  class Meta:
+    unique_together = ('appointment', 'doctor', 'procedure')
 
 class Appointment(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

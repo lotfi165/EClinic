@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import presentation, auth, patient, doctor, department, speciality, procedures, appointement
+from .views import presentation, auth, patient, doctor, department, speciality, procedures, appointement, procedureApplication
 
 urlpatterns = [
   path('', presentation.index, name='index'),
@@ -36,8 +36,10 @@ urlpatterns = [
 
   path('dashboard/appointments/patient/<str:patientId>/add', appointement.addAppointement, name='add-appointment'),
   path('dashboard/appointments/edit/<str:appointmentId>', appointement.editAppointment, name='edit-appointment'),
-  path('dashboard/appointments/apply-procedure/<str:appointmentId>', appointement.applyProcedure, name='apply-procedure'),
   path('dashboard/appointments/doctor/<str:doctorId>', appointement.appointmentListDoctor, name='appointment-list-doctor'),
   path('dashboard/appointments/patient/<str:patientId>', appointement.appointmentListPatient, name='appointment-list-patient'),
   path('dashboard/appointments/delete/<str:appointmentId>', appointement.deleteAppointment, name='delete-appointment'),
+  path('dashboard/appointments/apply-procedure/<str:appointmentId>', procedureApplication.applyProcedure, name='apply-procedure'),
+
+  path('dashboard/procedure-applications/delete/<str:procedureApplicationId>', procedureApplication.deleteProcedureApplication, name='delete-procedure-application'),
 ]
