@@ -1,5 +1,5 @@
 from django import forms
-from .models import Patient, MedicalHistory, Doctor, Department, Speciality, Procedure, Appointment, ProcedureApplication
+from .models import Patient, MedicalHistory, MedicalStaff, Department, Speciality, Procedure, Appointment, ProcedureApplication
 
 class SignInForm(forms.Form):
   username = forms.CharField()
@@ -18,9 +18,9 @@ class MedicalHistoryForm(forms.ModelForm):
     model = MedicalHistory
     fields = '__all__'
 
-class DoctorForm(forms.ModelForm):
+class MedicalStaffForm(forms.ModelForm):
   class Meta:
-    model = Doctor
+    model = MedicalStaff
     fields = '__all__'
 
 class DepartmentForm(forms.ModelForm):
@@ -43,8 +43,8 @@ class ProcedureApplicationForm(forms.ModelForm):
     model = ProcedureApplication
     fields = '__all__'
 
-class AssignDoctorForm(forms.Form):
-  doctorId = forms.CharField()
+class AssignMedicalStaffForm(forms.Form):
+  medicalStaffId = forms.CharField()
   remove = forms.BooleanField(required=False)
 
 class AppointmentForm(forms.ModelForm):

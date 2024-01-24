@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {% block head %}
-  <title>Edit doctor</title>
+  <title>Edit medical staff</title>
 {% endblock head %} 
 
 {% block dashboard_content %}
@@ -11,7 +11,7 @@
     <form class="flex flex-1 flex-col w-[90%] max-w-[50rem]" action="" method="post">
       {% csrf_token %}
   
-      <div class="text-[30pt] font-bold"><i class="fas fa-pen text-primary mr-[1rem]"></i>Edit doctor</div>
+      <div class="text-[30pt] font-bold"><i class="fas fa-pen text-primary mr-[1rem]"></i>Edit medical staff</div>
 
       {% if messages %}
         {% for message in messages %}

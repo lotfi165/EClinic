@@ -3,7 +3,7 @@ from django.http import HttpRequest
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from ..forms import AppointmentForm, SearchForm
-from ..models import Patient, Appointment, Doctor, ProcedureApplication
+from ..models import Patient, Appointment, MedicalStaff, ProcedureApplication
 from django.db.models import Q
 
 @login_required(login_url='sign-in')
@@ -44,42 +44,6 @@ def deleteAppointment(request: HttpRequest, appointmentId: str):
   patient = appointment.patient
   appointment.delete()
   return redirect('appointment-list-patient', patientId=patient.id)
-
-@login_required(login_url='sign-in')
-def appointmentListDoctor(request: HttpRequest, doctorId: str):
-  doctor = get_object_or_404(Doctor, id=doctorId)
-  form = SearchForm(request.GET)
-  appointments = []
-  if form.is_valid():
-    search = form.cleaned_data['search']
-    appointments = Appointment.objects.filter(
-      Q(patient__firstName__icontains=search) |
-      Q(patient__lastName__icontains=search) |
-      Q(patient__dateOfBirth__icontains=search) |
-      Q(patient__adress__icontains=search) |
-      Q(patient__phoneNumber__icontains=search) |
-      Q(patient__email__icontains=search) |
-      Q(patient__gender__icontains=search) |
-
-      Q(doctors__icontains=doctor) |
-      Q(doctors__firstName__icontains=search) |
-      Q(doctors__lastName__icontains=search) |
-      Q(doctors__dateOfBirth__icontains=search) |
-      Q(doctors__adress__icontains=search) |
-      Q(doctors__phoneNumber__icontains=search) |
-      Q(doctors__email__icontains=search) |
-      Q(doctors__gender__icontains=search) |
-
-      Q(procedures__name__icontains=search) |
-      Q(timestamp__icontains=search) |
-      Q(state__icontains=search),
-    )
-  else:
-    appointments = Appointment.objects.filter(
-      Q(doctors__icontains=doctor),
-    )
-  context = { 'appointments': appointments, 'form': form, 'doctor': doctor }
-  return render(request, 'pages/appointment/appointment-list.html', context=context)
 
 @login_required(login_url='sign-in')
 def appointmentListPatient(request: HttpRequest, patientId: str):

@@ -26,10 +26,10 @@
               </ul>
             </details>
             <details open>
-              <summary class="text-[15pt] mt-[1rem]"><i class="fas fa-user-doctor text-primary"></i>Doctors</summary>
+              <summary class="text-[15pt] mt-[1rem]"><i class="fas fa-user-doctor text-primary"></i>Medical staff</summary>
               <ul>
-                <li><a {% if request.path == '/dashboard/doctors/add' %}class="bg-primary text-primary-content"{% endif %} href="{% url "add-doctor" %}"><i class="fas fa-plus"></i>Add doctor</a></li>
-                <li><a {% if request.path == '/dashboard/doctors' %}class="bg-primary text-primary-content"{% endif %} href="{% url "doctor-list" %}"><i class="fas fa-list"></i>Doctor list</a></li>
+                <li><a {% if request.path == '/dashboard/medical-staff/add' %}class="bg-primary text-primary-content"{% endif %} href="{% url "add-medical-staff" %}"><i class="fas fa-plus"></i>Add medical staff</a></li>
+                <li><a {% if request.path == '/dashboard/medical-staff' %}class="bg-primary text-primary-content"{% endif %} href="{% url "medical-staff-list" %}"><i class="fas fa-list"></i>Medical staff list</a></li>
               </ul>
             </details>
             <details open>

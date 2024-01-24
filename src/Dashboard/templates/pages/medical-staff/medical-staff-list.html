@@ -3,13 +3,13 @@
 {% load widget_tweaks %}
 
 {% block head %}
-  <title>Doctor list</title>
+  <title>Medical staff list</title>
 {% endblock head %} 
 
 {% block dashboard_content %}
   <div class="flex flex-1 flex-col items-center pb-[5rem]">
     <div class="flex flex-1 flex-col max-w-[90%] lg:max-w-[80%] justify-start w-full">
-      <div class="text-[30pt] font-bold"><i class="fas fa-list text-primary mr-[1rem]"></i>Doctor list</div>
+      <div class="text-[30pt] font-bold"><i class="fas fa-list text-primary mr-[1rem]"></i>Medical staff list</div>
 
       <form action="" method="get" class="mb-[1rem]">
         <label class="form-control w-full">
@@ -17,13 +17,13 @@
             <span class="label-text"><i class="fas fa-search"></i> Search</span>
           </div>
           <div class="flex">
-            {% render_field form.search placeholder="Search doctors" type="text" class+="input input-bordered w-full" %}
+            {% render_field form.search placeholder="Search medical staff" type="text" class+="input input-bordered w-full" %}
             <button class="btn btn-primary ml-[0.5rem]"><i class="fas fa-search"></i></button>
           </div>
         </label>
       </form>
 
-      {% if doctors.count > 0 %}
+      {% if medicalStaffArray.count > 0 %}
       <div class="overflow-x-auto flex-1 flex items-start">
         <table class="table table-pin-rows table-pin-cols table-zebra">
           <thead>
@@ -44,22 +44,22 @@
             </tr>
           </thead> 
           <tbody>
-            {% for doctor in doctors %}
+            {% for medicalStaff in medicalStaffArray %}
               <tr>
                 <td>
                   <div class="dropdown">
                     <div tabindex="0" role="button" class="btn btn-primary m-1"><i class="fas fa-ellipsis"></i></div>
                     <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-2xl bg-base-200 rounded-box w-52">
-                      <li><a href="{% url "edit-doctor" doctorId=doctor.id %}"><i class="fas fa-pen"></i>Edit</a></li>
+                      <li><a href="{% url "edit-medical-staff" medicalStaffId=medicalStaff.id %}"><i class="fas fa-pen"></i>Edit</a></li>
                       <li><a class="text-error" onclick="modal_{{forloop.counter}}.showModal()"><i class="fas fa-trash"></i>Delete</a></li>
                     </ul>
                   </div>
                   <dialog id="modal_{{forloop.counter}}" class="modal">
                     <div class="modal-box">
                       <h3 class="font-bold text-lg">Delete confirmation</h3>
-                      <p class="py-4">Are you sure you want to delete doctor "{{doctor.firstName}} {{doctor.lastName}}"</p>
+                      <p class="py-4">Are you sure you want to delete medical staff "{{medicalStaff.firstName}} {{medicalStaff.lastName}}"</p>
                       <div class="modal-action">
-                        <form action="{% url "delete-doctor" doctorId=doctor.id %}" method="post">
+                        <form action="{% url "delete-medical-staff" medicalStaffId=medicalStaff.id %}" method="post">
                           {% csrf_token %}
                           <button class="btn btn-error">Delete</button>
                         </form>
@@ -70,18 +70,18 @@
                     </div>
                   </dialog>   
                 </td>
-                <td>{{doctor.id}}</td> 
-                <td>{{doctor.department}}</td>
-                <td>{{doctor.speciality}}</td>
-                <td>{{doctor.firstName}}</td> 
-                <td>{{doctor.lastName}}</td> 
-                <td>{{doctor.dateOfBirth}}</td> 
-                <td>{{doctor.adress}}</td> 
-                <td>{{doctor.phoneNumber}}</td>
-                <td>{{doctor.email}}</td>
-                <td>{{doctor.gender}}</td>
-                <td>{{doctor.createdAt}}</td>
-                <td>{{doctor.updatedAt}}</td>
+                <td>{{medicalStaff.id}}</td> 
+                <td>{{medicalStaff.department}}</td>
+                <td>{{medicalStaff.speciality}}</td>
+                <td>{{medicalStaff.firstName}}</td> 
+                <td>{{medicalStaff.lastName}}</td> 
+                <td>{{medicalStaff.dateOfBirth}}</td> 
+                <td>{{medicalStaff.adress}}</td> 
+                <td>{{medicalStaff.phoneNumber}}</td>
+                <td>{{medicalStaff.email}}</td>
+                <td>{{medicalStaff.gender}}</td>
+                <td>{{medicalStaff.createdAt}}</td>
+                <td>{{medicalStaff.updatedAt}}</td>
               </tr>
             {% endfor %}
           </tbody> 

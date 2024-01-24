@@ -39,7 +39,7 @@ class MedicalHistory(models.Model):
   medications = models.TextField(null=True, blank=True)
   updatedAt = models.DateTimeField(auto_now=True, blank=True)
 
-class Doctor(models.Model):
+class MedicalStaff(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   department = models.ForeignKey('Department', on_delete=models.CASCADE)
   speciality = models.ForeignKey('Speciality', on_delete=models.CASCADE)
@@ -81,12 +81,12 @@ class Procedure(models.Model):
 class ProcedureApplication(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   appointment = models.ForeignKey('Appointment', on_delete=models.CASCADE)
-  doctor = models.ForeignKey('Doctor', on_delete=models.CASCADE)
+  medicalStaff = models.ForeignKey('MedicalStaff', on_delete=models.CASCADE)
   procedure = models.ForeignKey('Procedure', on_delete=models.CASCADE)
   report = models.TextField(null=True, blank=True)
 
   class Meta:
-    unique_together = ('appointment', 'doctor', 'procedure')
+    unique_together = ('appointment', 'medicalStaff', 'procedure')
 
 class Appointment(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

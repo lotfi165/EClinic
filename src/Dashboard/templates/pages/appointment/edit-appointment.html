@@ -60,7 +60,7 @@
             
 
             <div class="flex flex-col bg-base-100 rounded-lg p-[1rem] mt-[0.5rem]">
-              <div class="text-[20pt] font-bold my-[0.5rem]"><i class="fas fa-list-check text-primary mr-[1rem]"></i>Doctors</div>
+              <div class="text-[20pt] font-bold my-[0.5rem]"><i class="fas fa-list-check text-primary mr-[1rem]"></i>Medical staff</div>
               <div class="overflow-x-auto flex-1 flex items-start">
                 <table class="table table-pin-rows table-pin-cols table-zebra">
                   <thead>
@@ -93,7 +93,7 @@
                           <dialog id="modal_{{forloop.counter}}" class="modal">
                             <div class="modal-box">
                               <h3 class="font-bold text-lg">Delete confirmation</h3>
-                              <p class="py-4">Are you sure you want the procedure application "{{procedure.grouper}}" done by "{{procedureApplication.doctor.firstName}} {{procedureApplication.doctor.lastName}}"</p>
+                              <p class="py-4">Are you sure you want the procedure application "{{procedure.grouper}}" done by "{{procedureApplication.medicalStaff.firstName}} {{procedureApplication.medicalStaff.lastName}}"</p>
                               <div class="modal-action">
                                 <form action="{% url "delete-procedure-application" procedureApplicationId=procedureApplication.id %}" method="post">
                                   {% csrf_token %}
@@ -106,18 +106,18 @@
                             </div>
                           </dialog>   
                         </td>
-                        <td>{{procedureApplication.doctor.id}}</td> 
-                        <td>{{procedureApplication.doctor.department}}</td>
-                        <td>{{procedureApplication.doctor.speciality}}</td>
-                        <td>{{procedureApplication.doctor.firstName}}</td> 
-                        <td>{{procedureApplication.doctor.lastName}}</td> 
-                        <td>{{procedureApplication.doctor.dateOfBirth}}</td> 
-                        <td>{{procedureApplication.doctor.adress}}</td> 
-                        <td>{{procedureApplication.doctor.phoneNumber}}</td>
-                        <td>{{procedureApplication.doctor.email}}</td>
-                        <td>{{procedureApplication.doctor.gender}}</td>
-                        <td>{{procedureApplication.doctor.createdAt}}</td>
-                        <td>{{procedureApplication.doctor.updatedAt}}</td>
+                        <td>{{procedureApplication.medicalStaff.id}}</td> 
+                        <td>{{procedureApplication.medicalStaff.department}}</td>
+                        <td>{{procedureApplication.medicalStaff.speciality}}</td>
+                        <td>{{procedureApplication.medicalStaff.firstName}}</td> 
+                        <td>{{procedureApplication.medicalStaff.lastName}}</td> 
+                        <td>{{procedureApplication.medicalStaff.dateOfBirth}}</td> 
+                        <td>{{procedureApplication.medicalStaff.adress}}</td> 
+                        <td>{{procedureApplication.medicalStaff.phoneNumber}}</td>
+                        <td>{{procedureApplication.medicalStaff.email}}</td>
+                        <td>{{procedureApplication.medicalStaff.gender}}</td>
+                        <td>{{procedureApplication.medicalStaff.createdAt}}</td>
+                        <td>{{procedureApplication.medicalStaff.updatedAt}}</td>
                       </tr>
                     {% endfor %}
                   </tbody> 

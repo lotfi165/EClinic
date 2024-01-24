@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import presentation, auth, patient, doctor, department, speciality, procedures, appointement, procedureApplication
+from .views import medicalStaff, presentation, auth, patient, department, speciality, procedures, appointement, procedureApplication
 
 urlpatterns = [
   path('', presentation.index, name='index'),
@@ -14,10 +14,10 @@ urlpatterns = [
   path('dashboard/patients/edit/<str:patientId>/history', patient.editMedicalHistory, name='edit-medical-history'),
   path('dashboard/patients/delete/<str:patientId>/', patient.deletePatient, name='delete-patient'),
 
-  path('dashboard/doctors', doctor.doctorList, name='doctor-list'),
-  path('dashboard/doctors/add', doctor.addDoctor, name='add-doctor'),
-  path('dashboard/doctors/edit/<str:doctorId>/', doctor.editDoctor, name='edit-doctor'),
-  path('dashboard/doctors/delete/<str:doctorId>/', doctor.deleteDoctor, name='delete-doctor'),
+  path('dashboard/medical-staff', medicalStaff.medicalStaffList, name='medical-staff-list'),
+  path('dashboard/medical-staff/add', medicalStaff.addMedicalStaff, name='add-medical-staff'),
+  path('dashboard/medical-staff/edit/<str:medicalStaffId>/', medicalStaff.editMedicalStaff, name='edit-medical-staff'),
+  path('dashboard/medical-staff/delete/<str:medicalStaffId>/', medicalStaff.deleteMedicalStaff, name='delete-medical-staff'),
 
   path('dashboard/departments', department.departmentList, name='department-list'),
   path('dashboard/departments/add', department.addDepartment, name='add-department'),
@@ -36,7 +36,6 @@ urlpatterns = [
 
   path('dashboard/appointments/patient/<str:patientId>/add', appointement.addAppointement, name='add-appointment'),
   path('dashboard/appointments/edit/<str:appointmentId>', appointement.editAppointment, name='edit-appointment'),
-  path('dashboard/appointments/doctor/<str:doctorId>', appointement.appointmentListDoctor, name='appointment-list-doctor'),
   path('dashboard/appointments/patient/<str:patientId>', appointement.appointmentListPatient, name='appointment-list-patient'),
   path('dashboard/appointments/delete/<str:appointmentId>', appointement.deleteAppointment, name='delete-appointment'),
   path('dashboard/appointments/apply-procedure/<str:appointmentId>', procedureApplication.applyProcedure, name='apply-procedure'),
