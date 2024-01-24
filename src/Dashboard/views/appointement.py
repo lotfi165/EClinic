@@ -35,6 +35,7 @@ def editAppointment(request: HttpRequest, appointmentId: str):
     if form.is_valid():
       form.save()
       messages.success(request=request, message='Appointment updated successfully')
+      return redirect('appointment-list-patient', patientId=patient.id)
   context = { 'form': form, 'patient': patient, 'procedureApplications': procedureApplications, 'appointment': appointment }
   return render(request, 'pages/appointment/edit-appointment.html', context=context)
 

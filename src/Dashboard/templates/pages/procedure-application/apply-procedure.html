@@ -64,17 +64,6 @@
       <form class="flex flex-1 flex-col" action="" method="post">
         {% csrf_token %}
   
-        {% if messages %}
-          {% for message in messages %}
-            {% if message.tags == 'success' %}
-              <div role="alert" class="alert alert-success mt-[1rem]">
-                <i class="fas fa-check"></i>
-                <span>{{message}}</span>
-              </div>
-            {% endif %}
-          {% endfor %}
-        {% endif %}
-  
         {% if form.errors %}
           <div role="alert" class="alert alert-error mt-[1rem]">
             <i class="fas fa-times"></i>

@@ -14,6 +14,7 @@ def addDepartment(request: HttpRequest):
     if form.is_valid():
       form.save()
       messages.success(request=request, message='Department created successfully')
+      return redirect('department-list')
   else:
     form = DepartmentForm()
   context = { 'form': form }
@@ -28,6 +29,7 @@ def editDepartment(request: HttpRequest, departmentId: str):
     if form.is_valid():
       form.save()
       messages.success(request=request, message='Department updated successfully')
+      return redirect('department-list')
   context = { 'form': form }
   return render(request, 'pages/department/edit-department.html', context=context)
 

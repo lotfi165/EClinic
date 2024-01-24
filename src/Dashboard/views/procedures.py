@@ -14,6 +14,7 @@ def addProcedure(request: HttpRequest):
     if form.is_valid():
       form.save()
       messages.success(request=request, message='Procedure created successfully')
+      return redirect('procedure-list')
   else:
     form = ProcedureForm()
   context = { 'form': form }
@@ -28,6 +29,7 @@ def editProcedure(request: HttpRequest, procedureId: str):
     if form.is_valid():
       form.save()
       messages.success(request=request, message='Procedure updated successfully')
+      return redirect('procedure-list')
   context = { 'form': form }
   return render(request, 'pages/procedure/edit-procedure.html', context=context)
 

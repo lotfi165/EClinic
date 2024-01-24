@@ -14,6 +14,7 @@ def addSpeciality(request: HttpRequest):
     if form.is_valid():
       form.save()
       messages.success(request=request, message='Speciality created successfully')
+      return redirect('speciality-list')
   else:
     form = SpecialityForm()
   context = { 'form': form }
@@ -28,6 +29,7 @@ def editSpeciality(request: HttpRequest, specialityId: str):
     if form.is_valid():
       form.save()
       messages.success(request=request, message='Speciality updated successfully')
+      return redirect('speciality-list')
   context = { 'form': form }
   return render(request, 'pages/speciality/edit-speciality.html', context=context)
 

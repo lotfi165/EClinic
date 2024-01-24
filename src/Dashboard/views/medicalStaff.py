@@ -14,6 +14,7 @@ def addMedicalStaff(request: HttpRequest):
     if form.is_valid():
       form.save()
       messages.success(request=request, message='Medical Staff created successfully')
+      return redirect('medical-staff-list')
   else:
     form = MedicalStaffForm()
   context = { 'form': form }
@@ -28,6 +29,7 @@ def editMedicalStaff(request: HttpRequest, medicalStaffId: str):
     if form.is_valid():
       form.save()
       messages.success(request=request, message='Medical Staff updated successfully')
+      return redirect('medical-staff-list')
   context = { 'form': form }
   return render(request, 'pages/medical-staff/edit-medical-staff.html', context=context)
 

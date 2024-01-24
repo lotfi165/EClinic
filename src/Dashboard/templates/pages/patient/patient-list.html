@@ -11,6 +11,17 @@
     <div class="flex flex-1 flex-col max-w-[90%] lg:max-w-[80%] justify-start w-full">
       <div class="text-[30pt] font-bold"><i class="fas fa-list text-primary mr-[1rem]"></i>Patient list</div>
 
+      {% if messages %}
+        {% for message in messages %}
+          {% if message.tags == 'success' %}
+            <div role="alert" class="alert alert-success mt-[1rem]">
+              <i class="fas fa-check"></i>
+              <span>{{message}}</span>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
       <form action="" method="get" class="mb-[1rem]">
         <label class="form-control w-full">
           <div class="label">

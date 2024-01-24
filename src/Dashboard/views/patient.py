@@ -15,6 +15,7 @@ def addPatient(request: HttpRequest):
       patient = form.save()
       MedicalHistory.objects.create(patient=patient)
       messages.success(request=request, message='Patient created successfully')
+      return redirect('patient-list')
   else:
     form = PatientForm()
   context = { 'form': form }
@@ -29,6 +30,7 @@ def editPatient(request: HttpRequest, patientId: str):
     if form.is_valid():
       form.save()
       messages.success(request=request, message='Patient updated successfully')
+      return redirect('patient-list')
   context = { 'form': form }
   return render(request, 'pages/patient/edit-patient.html', context=context)
 
@@ -44,6 +46,7 @@ def editMedicalHistory(request: HttpRequest, patientId: str):
     if form.is_valid():
       form.save()
       messages.success(request=request, message='Medical history updated successfully')
+      return redirect('patient-list')
   context = { 'form': form, 'patient': patient }
   return render(request, 'pages/patient/edit-medical-history.html', context=context)
 
