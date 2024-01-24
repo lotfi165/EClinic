@@ -1,0 +1,66 @@
+{% extends "layouts/dashboard.html" %} 
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+  <title>Edit appointment</title>
+{% endblock head %} 
+
+{% block dashboard_content %}
+  <div class="flex flex-1 flex-col items-center pb-[5rem]">
+    <div class="w-[90%] max-w-[50rem]">
+      <form class="flex flex-1 flex-col" action="" method="post">
+        {% csrf_token %}
+    
+        <div class="text-[30pt] font-bold"><i class="fas fa-pen text-primary mr-[1rem]"></i>Edit appointment</div>
+        <div class="text-[15pt] font-semibold ml-[1rem] mb-[1rem]"><i class="fas fa-user text-primary mr-[1rem]"></i>Patient: {{patient.firstName}} {{patient.lastName}}</div>
+  
+        {{procedureApplications}}
+        {% if messages %}
+          {% for message in messages %}
+            {% if message.tags == 'success' %}
+              <div role="alert" class="alert alert-success mt-[1rem]">
+                <i class="fas fa-check"></i>
+                <span>{{message}}</span>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+  
+        {% if form.errors %}
+          <div role="alert" class="alert alert-error mt-[1rem]">
+            <i class="fas fa-times"></i>
+            <span>{{form.errors}}</span>
+          </div>
+        {% endif %}
+  
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">Date & time</span>
+          </div>
+          {% render_field form.timestamp type="datetime-local" placeholder="Date & time" class+="input input-bordered w-full" %}
+        </label>
+  
+        <button class="btn btn-primary mt-[2rem]"><i class="fas fa-plus"></i>Edit appointment</button>
+      </form>
+  
+     
+      <a class="flex" href="{% url "apply-procedure" appointmentId=appointment.id %}">
+        <button class="btn btn-primary btn-outline flex flex-1 mt-[1rem]"><fas class="fa-plus"></fas>Apply procedure</button>
+      </a>
+     
+
+      <div class="text-[25pt] font-bold mt-[5rem]"><i class="fas fa-list-check text-primary mr-[1rem]"></i>Applied procedures</div>
+      {% if procedures.count > 0 %}
+          {% for procedure in procedures %}
+            <h1>lol</h1>
+          {% endfor %}
+        {% else %}
+          <div class="flex flex-col items-center mt-[5rem]">
+            <img class="w-[30%]" src="{% static "assets/empty-list.svg" %}" alt="empty-list">
+            <div class="text-[20pt]">No procedures applied</div>
+          </div>
+        {% endif %}
+    </div>
+  </div>
+{% endblock dashboard_content %}

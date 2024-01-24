@@ -35,5 +35,9 @@ urlpatterns = [
   path('dashboard/procedures/delete/<str:procedureId>/', procedures.deleteProcedure, name='delete-procedure'),
 
   path('dashboard/appointments/patient/<str:patientId>/add', appointement.addAppointement, name='add-appointment'),
-  path('dashboard/appointments/edit/<str:patientId>', appointement.editAppointment, name='edit-appointment'),
+  path('dashboard/appointments/edit/<str:appointmentId>', appointement.editAppointment, name='edit-appointment'),
+  path('dashboard/appointments/apply-procedure/<str:appointmentId>', appointement.applyProcedure, name='apply-procedure'),
+  path('dashboard/appointments/doctor/<str:doctorId>', appointement.appointmentListDoctor, name='appointment-list-doctor'),
+  path('dashboard/appointments/patient/<str:patientId>', appointement.appointmentListPatient, name='appointment-list-patient'),
+  path('dashboard/appointments/delete/<str:appointmentId>', appointement.deleteAppointment, name='delete-appointment'),
 ]

@@ -16,20 +16,6 @@
       <li>
         <details>
           <summary>
-            <i class="fas fa-user"></i> User: {{user}}
-          </summary>
-          <ul class="p-2 bg-base-200 rounded-t-none">
-            <li class="text-error">
-              <a href="{% url "sign-out" %}">
-                <i class="fas fa-power-off"></i> Sign out
-              </a>
-            </li>
-          </ul>
-        </details>
-      </li>
-      <li>
-        <details>
-          <summary>
             <i class="fas fa-brush"></i> Theme
           </summary>
           <ul class="p-2 bg-base-200 rounded-t-none">
@@ -41,6 +27,23 @@
             <li onclick="setDarkTheme()">
               <a>
                 <i class="fas fa-moon"></i> Dark
+              </a>
+            </li>
+          </ul>
+        </details>
+      </li>
+      <li>
+        <details>
+          <summary>
+            <div class="rounded-full mr-[0.5rem] ring ring-primary ring-offset-base-100 ring-offset-[0.15rem] flex justify-center items-center pt-[0.05rem]">
+              <i class="fas fa-user-circle text-[15pt]"></i>
+            </div>
+            {{user}}
+          </summary>
+          <ul class="p-2 bg-base-200 rounded-t-none">
+            <li class="text-error">
+              <a href="{% url "sign-out" %}">
+                <i class="fas fa-power-off"></i> Sign out
               </a>
             </li>
           </ul>

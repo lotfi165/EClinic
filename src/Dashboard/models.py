@@ -77,12 +77,16 @@ class Procedure(models.Model):
 
   def __str__(self):
      return f"{self.name}"
+  
+class ProcedureApplication(models.Model):
+  appointment = models.ForeignKey('Appointment', on_delete=models.CASCADE)
+  doctor = models.ForeignKey('Doctor', on_delete=models.CASCADE)
+  procedure = models.ForeignKey('Procedure', on_delete=models.CASCADE)
+  report = models.TextField()
 
 class Appointment(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   patient = models.ForeignKey('Patient', on_delete=models.CASCADE)
-  doctors = models.ManyToManyField('Doctor', blank=True)
-  procedures = models.ManyToManyField('Procedure', blank=True)
   timestamp = models.DateTimeField()
   state = models.CharField(max_length=10, choices=AppointmentState.choices, default=AppointmentState.SCHEDULED, blank=True)
   createdAt = models.DateTimeField(auto_now_add=True)
