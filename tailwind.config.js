@@ -12,7 +12,7 @@ module.exports = {
         },
         DARK: {
           primary: "#22d3ee",
-          "base-100": "#1f2937",
+          "base-100": "#2B3441",
           success: "#4ade80",
           warning: "#facc15",
           error: "#dc2626",

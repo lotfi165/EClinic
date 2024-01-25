@@ -72,20 +72,22 @@
         {% endif %}
   
         
-        <label class="form-control w-full">
-          <div class="label">
-            <span class="label-text">Procedure</span>
-          </div>
-          {% render_field form.procedure class+="select select-bordered" %}
-        </label>
         {% if medicalStaff != None %}
+          <label class="form-control w-full">
+            <div class="label">
+              <span class="label-text">Procedure</span>
+            </div>
+            {% render_field form.procedure class+="select select-bordered" %}
+          </label>
+
           <select name="medicalStaff" required="" id="id_medicalStaff" hidden>
             <option value="{{medicalStaff.id}}">{{medicalStaff.firstName}}</option>
           </select>
+
+          <input type="text" name="confirm" value="true" hidden>
+    
+          <button class="btn btn-primary mt-[2rem]"><i class="fas fa-plus"></i>Apply procedure</button>
         {% endif %}
-        <input type="text" name="confirm" value="true" hidden>
-  
-        <button class="btn btn-primary mt-[2rem]"><i class="fas fa-plus"></i>Apply procedure</button>
       </form>
   
   
