@@ -2,32 +2,128 @@
 {% load static %}
 
 {% block head %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
   <title>Dashboard</title>
 {% endblock head %} 
 
 {% block dashboard_content %}
   <div class="flex flex-col px-[1rem]">
-    <div class="grid grid-cols-3 auto-cols-max gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-3 auto-cols-max gap-4">
       <div class="flex flex-col bg-base-200 rounded-xl p-[1rem]">
         <div class="text-base-content text-[17pt]">Total patients</div>
-        <div class="text-primary font-bold">10</div>
+        <div class="text-primary font-bold">{{patientCount}}</div>
       </div>
       <div class="flex flex-col bg-base-200 rounded-xl p-[1rem]">
         <div class="text-base-content text-[17pt]">Total staff</div>
-        <div class="text-primary font-bold">10</div>
+        <div class="text-primary font-bold">{{medicalStaffCount}}</div>
       </div>
       <div class="flex flex-col bg-base-200 rounded-xl p-[1rem]">
         <div class="text-base-content text-[17pt]">Total departments</div>
-        <div class="text-primary font-bold">10</div>
+        <div class="text-primary font-bold">{{departmentCount}}</div>
       </div>
       <div class="flex flex-col bg-base-200 rounded-xl p-[1rem]">
         <div class="text-base-content text-[17pt]">Total specialities</div>
-        <div class="text-primary font-bold">10</div>
+        <div class="text-primary font-bold">{{specialityCount}}</div>
       </div>
       <div class="flex flex-col bg-base-200 rounded-xl p-[1rem]">
         <div class="text-base-content text-[17pt]">Total appointments</div>
-        <div class="text-primary font-bold">10</div>
+        <div class="text-primary font-bold">{{appointmentCount}}</div>
       </div>
     </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 auto-cols-max gap-[1rem] mt-[2rem] pb-[7rem]">
+      <div class="h-[20rem]">
+        <canvas id="staff-per-speciality"></canvas>
+      </div>
+      <div class="h-[20rem]">
+        <canvas id="staff-per-department"></canvas>
+      </div>
+      <div class="h-[20rem]">
+        <canvas id="procedure-application-per-procedure"></canvas>
+      </div>
+    </div>
+
+    <script>
+      window.onload = function () {
+        const staffPerSpeciality = document.getElementById('staff-per-speciality');
+        const staffPerDepartment = document.getElementById('staff-per-department');
+        const procedureApplicationPerProcedure = document.getElementById('procedure-application-per-procedure');
+
+        new Chart(staffPerDepartment, {
+          type: 'bar',
+          data: {
+            labels: [
+              {% for key in departmentMedicalStaffCountKeys %}
+                "{{key}}",
+              {% endfor %}
+            ],
+            datasets: [{
+              label: 'Medical staff per department',
+              backgroundColor: 'rgba(34, 244, 238, 0.5)',
+              data: [
+                {% for key in departmentMedicalStaffCountValues %}
+                  {{key}},
+                {% endfor %}
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+          }
+        });
+        new Chart(staffPerSpeciality, {
+          type: 'bar',
+          data: {
+            labels: [
+              {% for key in specialityMedicalStaffCountKeys %}
+                "{{key}}",
+              {% endfor %}
+            ],
+            datasets: [{
+              label: 'Medical staff per speciality',
+              backgroundColor: 'rgba(34, 244, 238, 0.5)',
+              data: [
+                {% for key in specialityMedicalStaffCountValues %}
+                  {{key}},
+                {% endfor %}
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+          }
+        });
+        
+        new Chart(procedureApplicationPerProcedure, {
+          type: 'bar',
+          color: "red",
+          data: {
+            labels: [
+              {% for key in procedureApplicationCountKeys %}
+                "{{key}}",
+              {% endfor %}
+            ],
+            datasets: [{
+              label: 'Procedure applications per procedure type',
+              backgroundColor: 'rgba(34, 244, 238, 0.5)',
+              data: [
+                {% for key in procedureApplicationCountValues %}
+                  {{key}},
+                {% endfor %}
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+          }
+        });
+      };
+    </script>
   </div>
 {% endblock dashboard_content %}

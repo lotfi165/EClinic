@@ -59,7 +59,7 @@
                   <dialog id="modal_{{forloop.counter}}" class="modal">
                     <div class="modal-box">
                       <h3 class="font-bold text-lg">Delete confirmation</h3>
-                      <p class="py-4">Are you sure you want to delete appointment ""</p>
+                      <p class="py-4">Are you sure you want to delete appointment of {{appointment.timestamp}}</p>
                       <div class="modal-action">
                         <form action="{% url "delete-appointment" appointmentId=appointment.id %}" method="post">
                           {% csrf_token %}
