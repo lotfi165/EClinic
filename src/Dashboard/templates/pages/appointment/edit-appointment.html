@@ -39,6 +39,13 @@
           </div>
           {% render_field form.timestamp type="datetime-local" placeholder="Date & time" class+="input input-bordered w-full" %}
         </label>
+        <label class="form-control w-full">
+          <div class="label">
+            <span class="label-text">State</span>
+          </div>
+          {% render_field form.state class+="select select-bordered w-full" %}
+        </label>
+        
   
         <button class="btn btn-primary mt-[2rem]"><i class="fas fa-plus"></i>Edit appointment</button>
       </form>
@@ -81,45 +88,47 @@
                     </tr>
                   </thead> 
                   <tbody>
-                    {% for procedureApplication in procedure.list %}
-                      <tr>
-                        <td>
-                          <div class="dropdown">
-                            <div tabindex="0" role="button" class="btn btn-primary m-1"><i class="fas fa-ellipsis"></i></div>
-                            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-2xl bg-base-200 rounded-box w-52">
-                              <li><a class="text-error" onclick="modal_{{forloop.counter}}.showModal()"><i class="fas fa-trash"></i>Delete</a></li>
-                            </ul>
-                          </div>
-                          <dialog id="modal_{{forloop.counter}}" class="modal">
-                            <div class="modal-box">
-                              <h3 class="font-bold text-lg">Delete confirmation</h3>
-                              <p class="py-4">Are you sure you want the procedure application "{{procedure.grouper}}" done by "{{procedureApplication.medicalStaff.firstName}} {{procedureApplication.medicalStaff.lastName}}"</p>
-                              <div class="modal-action">
-                                <form action="{% url "delete-procedure-application" procedureApplicationId=procedureApplication.id %}" method="post">
-                                  {% csrf_token %}
-                                  <button class="btn btn-error">Delete</button>
-                                </form>
-                                <form method="dialog">
-                                  <button class="btn">Close</button>
-                                </form>
-                              </div>
+                    {% with outerCount=forloop.counter %}
+                      {% for procedureApplication in procedure.list %}
+                        <tr>
+                          <td>
+                            <div class="dropdown">
+                              <div tabindex="0" role="button" class="btn btn-primary m-1"><i class="fas fa-ellipsis"></i></div>
+                              <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-2xl bg-base-200 rounded-box w-52">
+                                <li><a class="text-error" onclick="modal_{{outerCount}}_{{forloop.counter}}.showModal()"><i class="fas fa-trash"></i>Delete</a></li>
+                              </ul>
                             </div>
-                          </dialog>   
-                        </td>
-                        <td>{{procedureApplication.medicalStaff.id}}</td> 
-                        <td>{{procedureApplication.medicalStaff.department}}</td>
-                        <td>{{procedureApplication.medicalStaff.speciality}}</td>
-                        <td>{{procedureApplication.medicalStaff.firstName}}</td> 
-                        <td>{{procedureApplication.medicalStaff.lastName}}</td> 
-                        <td>{{procedureApplication.medicalStaff.dateOfBirth}}</td> 
-                        <td>{{procedureApplication.medicalStaff.adress}}</td> 
-                        <td>{{procedureApplication.medicalStaff.phoneNumber}}</td>
-                        <td>{{procedureApplication.medicalStaff.email}}</td>
-                        <td>{{procedureApplication.medicalStaff.gender}}</td>
-                        <td>{{procedureApplication.medicalStaff.createdAt}}</td>
-                        <td>{{procedureApplication.medicalStaff.updatedAt}}</td>
-                      </tr>
-                    {% endfor %}
+                            <dialog id="modal_{{outerCount}}_{{forloop.counter}}" class="modal">
+                              <div class="modal-box">
+                                <h3 class="font-bold text-lg">Delete confirmation</h3>
+                                <p class="py-4">Are you sure you want the procedure application "{{procedure.grouper}}" done by "{{procedureApplication.medicalStaff.firstName}} {{procedureApplication.medicalStaff.lastName}}"</p>
+                                <div class="modal-action">
+                                  <form action="{% url "delete-procedure-application" procedureApplicationId=procedureApplication.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="btn btn-error">Delete</button>
+                                  </form>
+                                  <form method="dialog">
+                                    <button class="btn">Close</button>
+                                  </form>
+                                </div>
+                              </div>
+                            </dialog>   
+                          </td>
+                          <td>{{procedureApplication.medicalStaff.id}}</td> 
+                          <td>{{procedureApplication.medicalStaff.department}}</td>
+                          <td>{{procedureApplication.medicalStaff.speciality}}</td>
+                          <td>{{procedureApplication.medicalStaff.firstName}}</td> 
+                          <td>{{procedureApplication.medicalStaff.lastName}}</td> 
+                          <td>{{procedureApplication.medicalStaff.dateOfBirth}}</td> 
+                          <td>{{procedureApplication.medicalStaff.adress}}</td> 
+                          <td>{{procedureApplication.medicalStaff.phoneNumber}}</td>
+                          <td>{{procedureApplication.medicalStaff.email}}</td>
+                          <td>{{procedureApplication.medicalStaff.gender}}</td>
+                          <td>{{procedureApplication.medicalStaff.createdAt}}</td>
+                          <td>{{procedureApplication.medicalStaff.updatedAt}}</td>
+                        </tr>
+                      {% endfor %}
+                    {% endwith %}
                   </tbody> 
                 </table>
               </div>
