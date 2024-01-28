@@ -182,7 +182,7 @@
                         <h3 class="font-bold text-lg">Delete confirmation</h3>
                         <p class="py-4">Are you sure you want to delete prescription of {{appointment.timestamp}}</p>
                         <div class="modal-action">
-                          <form action="{% url "delete-prescription" prescriptionId=appointment.id %}" method="post">
+                          <form action="{% url "delete-prescription" prescriptionId=prescription.id %}" method="post">
                             {% csrf_token %}
                             <button class="btn btn-error">Delete</button>
                           </form>
