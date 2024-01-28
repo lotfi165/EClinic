@@ -46,6 +46,7 @@ def departmentList(request: HttpRequest):
   if form.is_valid():
     search = form.cleaned_data['search']
     departments = Department.objects.filter(
+      Q(id__icontains=search) |
       Q(name__icontains=search)
     )
   else:

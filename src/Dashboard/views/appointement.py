@@ -47,6 +47,18 @@ def deleteAppointment(request: HttpRequest, appointmentId: str):
   return redirect('appointment-list-patient', patientId=patient.id)
 
 @login_required(login_url='sign-in')
+def appointmentListMedicalStaff(request: HttpRequest, medicalStaffId: str):
+  medicalStaff = get_object_or_404(MedicalStaff, id=medicalStaffId)
+
+  procedure_applications_for_medical_staff = ProcedureApplication.objects.filter(medicalStaff=medicalStaff)
+  appointments_for_medical_staff = [pa.appointment for pa in procedure_applications_for_medical_staff]
+
+  length = len(appointments_for_medical_staff)
+
+  context = { 'appointments': appointments_for_medical_staff, 'medicalStaff': medicalStaff, 'length': length }
+  return render(request, 'pages/appointment/appointment-list-medical-staff.html', context=context)
+
+@login_required(login_url='sign-in')
 def appointmentListPatient(request: HttpRequest, patientId: str):
   patient = get_object_or_404(Patient, id=patientId)
   form = SearchForm(request.GET)
@@ -54,13 +66,14 @@ def appointmentListPatient(request: HttpRequest, patientId: str):
   if form.is_valid():
     search = form.cleaned_data['search']
     appointments = Appointment.objects.filter(
+      Q(id__icontains=search) |
       Q(timestamp__icontains=search) |
       Q(state__icontains=search),
       patient=patient,
-    )
+    ).order_by('-timestamp')
   else:
     appointments = Appointment.objects.filter(
       patient=patient,
-    )
+    ).order_by('-timestamp')
   context = { 'appointments': appointments, 'form': form, 'patient': patient }
   return render(request, 'pages/appointment/appointment-list-patient.html', context=context)

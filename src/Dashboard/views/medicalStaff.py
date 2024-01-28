@@ -46,15 +46,18 @@ def medicalStaffList(request: HttpRequest):
   if form.is_valid():
     search = form.cleaned_data['search']
     medicalStaffArray = MedicalStaff.objects.filter(
+      Q(id__icontains=search) |
       Q(department__name__icontains=search) |
-        Q(speciality__name__icontains=search) |
-        Q(firstName__icontains=search) |
-        Q(lastName__icontains=search) |
-        Q(dateOfBirth__icontains=search) |
-        Q(adress__icontains=search) |
-        Q(phoneNumber__icontains=search) |
-        Q(email__icontains=search) |
-        Q(gender__icontains=search)
+      Q(speciality__name__icontains=search) |
+      Q(firstName__icontains=search) |
+      Q(lastName__icontains=search) |
+      Q(dateOfBirth__icontains=search) |
+      Q(adress__icontains=search) |
+      Q(phoneNumber__icontains=search) |
+      Q(email__icontains=search) |
+      Q(gender__icontains=search) |
+      Q(updatedAt__icontains=search) |
+      Q(createdAt__icontains=search) 
     )
   else:
     medicalStaffArray = MedicalStaff.objects.all()
