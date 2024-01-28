@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import medicalStaff, presentation, auth, patient, medicalHistory, department, speciality, procedures, appointement, procedureApplication, prescription
+from .views import medicalStaff, presentation, auth, patient, medicalHistory, department, procedure, speciality, appointement, procedureApplication, prescription
 
 urlpatterns = [
   path('', presentation.index, name='index'),
@@ -34,10 +34,10 @@ urlpatterns = [
   path('dashboard/specialities/edit/<str:specialityId>/', speciality.editSpeciality, name='edit-speciality'),
   path('dashboard/specialities/delete/<str:specialityId>/', speciality.deleteSpeciality, name='delete-speciality'),
 
-  path('dashboard/procedures/', procedures.procedureList, name='procedure-list'),
-  path('dashboard/procedures/add/', procedures.addProcedure, name='add-procedure'),
-  path('dashboard/procedures/edit/<str:procedureId>/', procedures.editProcedure, name='edit-procedure'),
-  path('dashboard/procedures/delete/<str:procedureId>/', procedures.deleteProcedure, name='delete-procedure'),
+  path('dashboard/procedures/', procedure.procedureList, name='procedure-list'),
+  path('dashboard/procedures/add/', procedure.addProcedure, name='add-procedure'),
+  path('dashboard/procedures/edit/<str:procedureId>/', procedure.editProcedure, name='edit-procedure'),
+  path('dashboard/procedures/delete/<str:procedureId>/', procedure.deleteProcedure, name='delete-procedure'),
 
   path('dashboard/appointments/patient/<str:patientId>/add/', appointement.addAppointement, name='add-appointment'),
   path('dashboard/appointments/edit/<str:appointmentId>/', appointement.editAppointment, name='edit-appointment'),

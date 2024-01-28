@@ -10,9 +10,9 @@
   {% include "components/navbar-simple.html" %}
   <div class="flex flex-1 bg-[url('/static/assets/wave-2.svg')] bg-no-repeat bg-bottom">
     <div class="flex flex-1">
-      <div class="flex flex-1 p-[2rem]">
-        <div class="flex flex-1 flex-col items-center lg:max-w-[40rem] text-center lg:p-[1.5rem] lg:shadow-[rgba(0,_0,_0,_0.3)_0px_30px_50px] rounded-xl lg:bg-base-100">
-          <div class="text-[30pt] font-bold mb-[2rem]">Sign in</div>
+      <div class="flex flex-1 p-[0.7rem] xl:p-[2rem]">
+        <div class="flex flex-1 flex-col items-center lg:max-w-[40rem] text-center p-[1.5rem] xl:p-[2rem] lg:shadow-[rgba(0,_0,_0,_0.3)_0px_30px_50px] rounded-xl lg:bg-base-100">
+          <div class="text-[25pt] xl:text-[30pt] font-bold mb-[1rem] xl:mb-[2rem]">Sign in</div> 
 
           <form class="flex flex-1 flex-col w-full" method="post">
             {% csrf_token %}
@@ -21,13 +21,13 @@
               <div class="label">
                 <span class="label-text"><i class="fas fa-user"></i> Username</span>
               </div>
-              {% render_field form.username placeholder="Username" class+="input input-bordered w-full" %}
+              {% render_field form.username placeholder="Username" class+="input input-bordered w-full h-[2.5rem] xl:h-[3rem]" %}
             </label>
             <label class="form-control w-full">
               <div class="label">
                 <span class="label-text"><i class="fas fa-key"></i> Password</span>
               </div>
-              {% render_field form.password placeholder="Password" type="password" class+="input input-bordered w-full" %}
+              {% render_field form.password placeholder="Password" type="password" class+="input input-bordered w-full h-[2.5rem] xl:h-[3rem]" %}
             </label>
 
             {% if messages %}
@@ -41,7 +41,7 @@
               {% endfor %}
             {% endif %}
   
-            <button type="submit" class="btn btn-primary w-full mt-[3rem]">
+            <button type="submit" class="btn btn-primary w-full mt-[1rem] xl:mt-[3rem]">
               <i class="fas fa-right-to-bracket"></i> Sign in 
             </button>
           </form>
