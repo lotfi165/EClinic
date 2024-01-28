@@ -35,22 +35,6 @@ def editPatient(request: HttpRequest, patientId: str):
   return render(request, 'pages/patient/edit-patient.html', context=context)
 
 @login_required(login_url='sign-in')
-def editMedicalHistory(request: HttpRequest, patientId: str):
-  patient = get_object_or_404(Patient, id=patientId)
-  medicalHistory = get_object_or_404(MedicalHistory, patient=patient)
-  form = MedicalHistoryForm(instance=medicalHistory, initial={'patient': patient})
-  if request.method == 'POST':
-    data = request.POST.copy() 
-    data.appendlist('patient', patient)
-    form = MedicalHistoryForm(data=data, instance=medicalHistory)
-    if form.is_valid():
-      form.save()
-      messages.success(request=request, message='Medical history updated successfully')
-      return redirect('patient-list')
-  context = { 'form': form, 'patient': patient }
-  return render(request, 'pages/patient/edit-medical-history.html', context=context)
-
-@login_required(login_url='sign-in')
 def deletePatient(request: HttpRequest, patientId: str):
   patient = get_object_or_404(Patient, id=patientId)
   patient.delete()

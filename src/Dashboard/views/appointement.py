@@ -3,7 +3,7 @@ from django.http import HttpRequest
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from ..forms import AppointmentForm, SearchForm
-from ..models import Patient, Appointment, MedicalStaff, ProcedureApplication
+from ..models import Patient, Appointment, MedicalStaff, ProcedureApplication, Prescription
 from django.db.models import Q
 
 @login_required(login_url='sign-in')
@@ -13,7 +13,6 @@ def addAppointement(request: HttpRequest, patientId: str):
   if request.method == 'POST':
     data = request.POST.copy() 
     data.appendlist('patient', patient)
-    print(data)
     form = AppointmentForm(data=data)
     if form.is_valid():
       appointment = form.save()
@@ -27,6 +26,8 @@ def editAppointment(request: HttpRequest, appointmentId: str):
   appointment = get_object_or_404(Appointment, id=appointmentId)
   patient = get_object_or_404(Patient, id=appointment.patient.id)
   procedureApplications = ProcedureApplication.objects.filter(appointment=appointment.id).order_by('procedure')
+  prescriptions = Prescription.objects.filter(appointment=appointment)
+
   form = AppointmentForm(instance=appointment, initial={'patient': patient})
   if request.method == 'POST':
     data = request.POST.copy() 
@@ -36,7 +37,7 @@ def editAppointment(request: HttpRequest, appointmentId: str):
       form.save()
       messages.success(request=request, message='Appointment updated successfully')
       return redirect('appointment-list-patient', patientId=patient.id)
-  context = { 'form': form, 'patient': patient, 'procedureApplications': procedureApplications, 'appointment': appointment }
+  context = { 'form': form, 'patient': patient, 'procedureApplications': procedureApplications, 'prescriptions': prescriptions, 'appointment': appointment }
   return render(request, 'pages/appointment/edit-appointment.html', context=context)
 
 @login_required(login_url='sign-in')

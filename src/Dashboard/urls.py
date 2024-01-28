@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import medicalStaff, presentation, auth, patient, department, speciality, procedures, appointement, procedureApplication
+from .views import medicalStaff, presentation, auth, patient, medicalHistory, department, speciality, procedures, appointement, procedureApplication, prescription
 
 urlpatterns = [
   path('', presentation.index, name='index'),
@@ -15,8 +15,9 @@ urlpatterns = [
   path('dashboard/patients/', patient.patientList, name='patient-list'),
   path('dashboard/patients/add/', patient.addPatient, name='add-patient'),
   path('dashboard/patients/edit/<str:patientId>/', patient.editPatient, name='edit-patient'),
-  path('dashboard/patients/edit/<str:patientId>/history/', patient.editMedicalHistory, name='edit-medical-history'),
   path('dashboard/patients/delete/<str:patientId>/', patient.deletePatient, name='delete-patient'),
+
+  path('dashboard/patients/edit/<str:patientId>/history/', medicalHistory.editMedicalHistory, name='edit-medical-history'),
 
   path('dashboard/medical-staff/', medicalStaff.medicalStaffList, name='medical-staff-list'),
   path('dashboard/medical-staff/add/', medicalStaff.addMedicalStaff, name='add-medical-staff'),
@@ -46,4 +47,8 @@ urlpatterns = [
   path('dashboard/appointments/apply-procedure/<str:appointmentId>/', procedureApplication.applyProcedure, name='apply-procedure'),
 
   path('dashboard/procedure-applications/delete/<str:procedureApplicationId>', procedureApplication.deleteProcedureApplication, name='delete-procedure-application'),
+
+  path('dashboard/prescriptions/patient/<str:appointmentId>/add/', prescription.addPrescription, name='add-prescription'),
+  path('dashboard/prescriptions/patient/<str:prescriptionId>/edit/', prescription.editPrescription, name='edit-prescription'),
+  path('dashboard/prescriptions/patient/<str:prescriptionId>/delete/', prescription.deletePrescription, name='delete-prescription'),
 ]

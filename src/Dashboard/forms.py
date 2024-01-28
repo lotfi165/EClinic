@@ -1,5 +1,5 @@
 from django import forms
-from .models import Patient, MedicalHistory, MedicalStaff, Department, Speciality, Procedure, Appointment, ProcedureApplication
+from .models import Patient, MedicalHistory, MedicalStaff, Department, Speciality, Procedure, Appointment, ProcedureApplication, Prescription
 
 class SignInForm(forms.Form):
   username = forms.CharField()
@@ -50,4 +50,9 @@ class AssignMedicalStaffForm(forms.Form):
 class AppointmentForm(forms.ModelForm):
   class Meta:
     model = Appointment
+    fields = '__all__'
+
+class PrescriptionForm(forms.ModelForm):
+  class Meta:
+    model = Prescription
     fields = '__all__'
