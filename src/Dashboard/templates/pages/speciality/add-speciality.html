@@ -10,6 +10,10 @@
   <div class="flex flex-1 flex-col items-center pb-[5rem]">
     <form class="flex flex-1 flex-col w-[90%] max-w-[50rem]" action="" method="post">
       {% csrf_token %}
+
+      <div class="flex mb-[1rem]">
+        <a class="btn btn-wide" href="{% url "dashboard" %}"><i class="fas fa-angle-left"></i>Back to dashboard</a>
+      </div>
   
       <div class="text-[30pt] font-bold"><i class="fas fa-plus text-primary mr-[1rem]"></i>Add speciality</div>
 

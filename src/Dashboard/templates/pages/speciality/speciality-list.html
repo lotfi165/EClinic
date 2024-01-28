@@ -9,6 +9,11 @@
 {% block dashboard_content %}
   <div class="flex flex-1 flex-col items-center pb-[5rem]">
     <div class="flex flex-1 flex-col max-w-[90%] lg:max-w-[80%] justify-start w-full">
+
+      <div class="flex mb-[1rem]">
+        <a class="btn btn-wide" href="{% url "dashboard" %}"><i class="fas fa-angle-left"></i>Back to dashboard</a>
+      </div>
+
       <div class="text-[30pt] font-bold"><i class="fas fa-list text-primary mr-[1rem]"></i>Speciality list</div>
 
       {% if messages %}

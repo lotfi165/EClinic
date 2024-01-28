@@ -11,6 +11,10 @@
     <div class="w-[90%] max-w-[50rem]">
       <form class="flex flex-1 flex-col" action="" method="post">
         {% csrf_token %}
+
+        <div class="flex mb-[1rem]">
+          <a class="btn btn-wide" href="{% url "appointment-list-patient" patientId=patient.id %}"><i class="fas fa-angle-left"></i>Back to appointment list</a>
+        </div>
     
         <div class="text-[30pt] font-bold"><i class="fas fa-pen text-primary mr-[1rem]"></i>Edit appointment</div>
         <div class="text-[15pt] font-semibold ml-[1rem] mb-[1rem]"><i class="fas fa-user text-primary mr-[1rem]"></i>Patient: {{patient.firstName}} {{patient.lastName}}</div>
@@ -80,7 +84,7 @@
                       <td>First name</td> 
                       <td>Last name</td> 
                       <td>Date of birth</td> 
-                      <td>Adress</td> 
+                      <td>Address</td> 
                       <td>Phone number</td>
                       <td>Email</td>
                       <td>Gender</td>
@@ -121,7 +125,7 @@
                           <td>{{procedureApplication.medicalStaff.firstName}}</td> 
                           <td>{{procedureApplication.medicalStaff.lastName}}</td> 
                           <td>{{procedureApplication.medicalStaff.dateOfBirth}}</td> 
-                          <td>{{procedureApplication.medicalStaff.adress}}</td> 
+                          <td>{{procedureApplication.medicalStaff.address}}</td> 
                           <td>{{procedureApplication.medicalStaff.phoneNumber}}</td>
                           <td>{{procedureApplication.medicalStaff.email}}</td>
                           <td>{{procedureApplication.medicalStaff.gender}}</td>

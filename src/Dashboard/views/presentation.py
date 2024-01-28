@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpRequest
 from django.contrib.auth.decorators import login_required
 from ..decorators import login_not_required
-from ..models import Patient, MedicalStaff, Department, Speciality, Appointment, Procedure, ProcedureApplication
+from ..models import Patient, MedicalStaff, Department, Speciality, Appointment, Genders
 
 # Create your views here.
 @login_not_required
@@ -33,13 +33,21 @@ def dashboard(request: HttpRequest):
   specialityMedicalStaffCountKeys = list(specialityMedicalStaffCount.keys())
   specialityMedicalStaffCountValues = list(specialityMedicalStaffCount.values())
 
-  procedures = Procedure.objects.all()
-  procedureApplicationCount = {}
-  for procedure in procedures:
-    procedureApplicationCountNumber = ProcedureApplication.objects.filter(procedure=procedure).count()
-    procedureApplicationCount[procedure.name] = procedureApplicationCountNumber
-  procedureApplicationCountKeys = list(procedureApplicationCount.keys())
-  procedureApplicationCountValues = list(procedureApplicationCount.values())
+  patientCountByGender = {}
+  patientMaleCount = Patient.objects.filter(gender=Genders.MALE).count()
+  patientCountByGender['Male'] = patientMaleCount
+  patientFemaleCount = Patient.objects.filter(gender=Genders.FEMALE).count()
+  patientCountByGender['Female'] = patientFemaleCount
+  patientCountByGenderKeys = list(patientCountByGender.keys())
+  patientCountByGenderValues = list(patientCountByGender.values())
+
+  medicalStaffCountByGender = {}
+  medicalStaffMaleCount = MedicalStaff.objects.filter(gender=Genders.MALE).count()
+  medicalStaffCountByGender['Male'] = medicalStaffMaleCount
+  medicalStaffFemaleCount = MedicalStaff.objects.filter(gender=Genders.FEMALE).count()
+  medicalStaffCountByGender['Female'] = medicalStaffFemaleCount
+  medicalStaffCountByGenderKeys = list(medicalStaffCountByGender.keys())
+  medicalStaffCountByGenderValues = list(medicalStaffCountByGender.values())
 
   context = {
     'patientCount': patientCount,
@@ -54,7 +62,10 @@ def dashboard(request: HttpRequest):
     'specialityMedicalStaffCountKeys': specialityMedicalStaffCountKeys,
     'specialityMedicalStaffCountValues': specialityMedicalStaffCountValues,
 
-    'procedureApplicationCountKeys': procedureApplicationCountKeys,
-    'procedureApplicationCountValues': procedureApplicationCountValues
+    'patientCountByGenderKeys': patientCountByGenderKeys,
+    'patientCountByGenderValues': patientCountByGenderValues,
+
+    'medicalStaffCountByGenderKeys': medicalStaffCountByGenderKeys,
+    'medicalStaffCountByGenderValues': medicalStaffCountByGenderValues
   }
   return render(request, 'pages/presentation/dashboard-home.html', context=context)

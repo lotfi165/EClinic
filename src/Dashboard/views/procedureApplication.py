@@ -42,7 +42,7 @@ def applyProcedure(request: HttpRequest, appointmentId: str):
         Q(firstName__icontains=search) |
         Q(lastName__icontains=search) |
         Q(dateOfBirth__icontains=search) |
-        Q(adress__icontains=search) |
+        Q(address__icontains=search) |
         Q(phoneNumber__icontains=search) |
         Q(email__icontains=search) |
         Q(gender__icontains=search) |

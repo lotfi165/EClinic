@@ -10,6 +10,10 @@
   <div class="flex flex-1 flex-col items-center pb-[5rem]">
     <form class="flex flex-1 flex-col w-[90%] max-w-[50rem]" action="" method="post">
       {% csrf_token %}
+
+      <div class="flex mb-[1rem]">
+        <a class="btn btn-wide" href="{% url "dashboard" %}"><i class="fas fa-angle-left"></i>Back to dashboard</a>
+      </div>
   
       <div class="text-[30pt] font-bold"><i class="fas fa-plus text-primary mr-[1rem]"></i>Add medical staff</div>
 
@@ -52,9 +56,9 @@
       </label>
       <label class="form-control w-full">
         <div class="label">
-          <span class="label-text">Adress</span>
+          <span class="label-text">Address</span>
         </div>
-        {% render_field form.adress placeholder="Adress" class+="input input-bordered w-full" %}
+        {% render_field form.address placeholder="Address" class+="input input-bordered w-full" %}
       </label>
       <label class="form-control w-full">
         <div class="label">

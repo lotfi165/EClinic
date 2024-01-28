@@ -4,7 +4,7 @@ from django.core.validators import EmailValidator, RegexValidator
 
 # Create your models here.
 class Genders(models.TextChoices):
-  MALE = 'MALE',
+  MALE = 'MALE'
   FEMALE = 'FEMALE'
 
 class ProcedureType(models.TextChoices):
@@ -12,7 +12,7 @@ class ProcedureType(models.TextChoices):
   ADMINISTRATIVE = 'ADMINISTRATIVE'
 
 class AppointmentState(models.TextChoices):
-  SCHEDULED = 'SCHEDULED',
+  SCHEDULED = 'SCHEDULED'
   COMPLETED = 'COMPLETED'
   CANCELED = 'CANCELED'
 
@@ -21,7 +21,7 @@ class Patient(models.Model):
   firstName = models.CharField(max_length=256, null=False)
   lastName = models.CharField(max_length=256, null=False)
   dateOfBirth = models.DateField(null=False)
-  adress = models.CharField(max_length=256, null=False)
+  address = models.CharField(max_length=256, null=False)
   phoneNumber = models.CharField(max_length=20, null=False, unique=True, validators=[RegexValidator(r'^(00213|\+213|0)(5|6|7)\d{8}$')])
   email = models.CharField(max_length=254, null=False, unique=True, validators=[EmailValidator()])
   gender = models.CharField(max_length=10, choices=Genders.choices, null=False)
@@ -47,7 +47,7 @@ class MedicalStaff(models.Model):
   firstName = models.CharField(max_length=256, null=False)
   lastName = models.CharField(max_length=256, null=False)
   dateOfBirth = models.DateField(null=False)
-  adress = models.CharField(max_length=256, null=False)
+  address = models.CharField(max_length=256, null=False)
   phoneNumber = models.CharField(max_length=20, null=False, unique=True, validators=[RegexValidator(r'^(00213|\+213|0)(5|6|7)\d{8}$')])
   email = models.CharField(max_length=254, null=False, unique=True, validators=[EmailValidator()])
   gender = models.CharField(max_length=10, choices=Genders.choices, null=False)
@@ -74,6 +74,7 @@ class Speciality(models.Model):
 class Procedure(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   name = models.CharField(max_length=256, null=False, unique=True)
+  department = models.ForeignKey('Department', on_delete=models.CASCADE, null=True, blank=True)
   type = models.CharField(max_length=20, choices=ProcedureType.choices, null=False)
 
   def __str__(self):

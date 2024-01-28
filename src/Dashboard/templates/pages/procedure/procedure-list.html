@@ -9,6 +9,11 @@
 {% block dashboard_content %}
   <div class="flex flex-1 flex-col items-center pb-[5rem]">
     <div class="flex flex-1 flex-col max-w-[90%] lg:max-w-[80%] justify-start w-full">
+
+      <div class="flex mb-[1rem]">
+        <a class="btn btn-wide" href="{% url "dashboard" %}"><i class="fas fa-angle-left"></i>Back to dashboard</a>
+      </div>
+
       <div class="text-[30pt] font-bold"><i class="fas fa-list text-primary mr-[1rem]"></i>Procedure list</div>
 
       {% if messages %}
@@ -51,7 +56,7 @@
                 <td>
                   <div class="dropdown">
                     <div tabindex="0" role="button" class="btn btn-primary m-1"><i class="fas fa-ellipsis"></i></div>
-                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-2xl bg-base-100 rounded-box w-52">
+                    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-2xl bg-base-200 rounded-box w-52">
                       <li><a href="{% url "edit-procedure" procedureId=procedure.id %}"><i class="fas fa-pen"></i>Edit</a></li>
                       <li><a class="text-error" onclick="modal_{{forloop.counter}}.showModal()"><i class="fas fa-trash"></i>Delete</a></li>
                     </ul>

@@ -2322,6 +2322,18 @@ html {
   border-top-width: 4px;
 }
 
+.btn-lg {
+  height: 4rem;
+  min-height: 4rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  font-size: 1.125rem;
+}
+
+.btn-wide {
+  width: 16rem;
+}
+
 .btn-square:where(.btn-xs) {
   height: 1.5rem;
   width: 1.5rem;
@@ -2343,6 +2355,13 @@ html {
 .btn-square:where(.btn-lg) {
   height: 4rem;
   width: 4rem;
+  padding: 0px;
+}
+
+.btn-circle:where(.btn-lg) {
+  height: 4rem;
+  width: 4rem;
+  border-radius: 9999px;
   padding: 0px;
 }
 
@@ -2466,6 +2485,10 @@ html {
   z-index: 1;
 }
 
+.z-40 {
+  z-index: 40;
+}
+
 .m-1 {
   margin: 0.25rem;
 }
@@ -2516,20 +2539,8 @@ html {
   margin-top: 2rem;
 }
 
-.mt-\[3rem\] {
-  margin-top: 3rem;
-}
-
 .mt-\[5rem\] {
   margin-top: 5rem;
-}
-
-.mb-\[0\.5rem\] {
-  margin-bottom: 0.5rem;
-}
-
-.mb-\[0\.7rem\] {
-  margin-bottom: 0.7rem;
 }
 
 .block {
@@ -2560,6 +2571,10 @@ html {
   height: 1.25rem;
 }
 
+.h-\[2\.5rem\] {
+  height: 2.5rem;
+}
+
 .h-\[20rem\] {
   height: 20rem;
 }
@@ -2574,26 +2589,6 @@ html {
 
 .h-full {
   height: 100%;
-}
-
-.h-\[1rem\] {
-  height: 1rem;
-}
-
-.h-\[2rem\] {
-  height: 2rem;
-}
-
-.h-\[3rem\] {
-  height: 3rem;
-}
-
-.h-\[2\.5rem\] {
-  height: 2.5rem;
-}
-
-.max-h-\[2\.5rem\] {
-  max-height: 2.5rem;
 }
 
 .min-h-full {
@@ -2750,12 +2745,28 @@ html {
   background-color: var(--fallback-p,oklch(var(--p)/var(--tw-bg-opacity)));
 }
 
+.bg-transparent {
+  background-color: transparent;
+}
+
 .bg-\[url\(\'\/static\/assets\/wave-1\.svg\'\)\] {
   background-image: url('/static/assets/wave-1.svg');
 }
 
 .bg-\[url\(\'\/static\/assets\/wave-2\.svg\'\)\] {
   background-image: url('/static/assets/wave-2.svg');
+}
+
+.bg-\[url\(\'\/static\/assets\/wave\.svg\'\)\] {
+  background-image: url('/static/assets/wave.svg');
+}
+
+.bg-none {
+  background-image: none;
+}
+
+.bg-cover {
+  background-size: cover;
 }
 
 .bg-bottom {
@@ -2782,6 +2793,10 @@ html {
   padding: 0.5rem;
 }
 
+.p-\[0\.7rem\] {
+  padding: 0.7rem;
+}
+
 .p-\[1\.5rem\] {
   padding: 1.5rem;
 }
@@ -2790,16 +2805,8 @@ html {
   padding: 1rem;
 }
 
-.p-\[2rem\] {
-  padding: 2rem;
-}
-
 .p-\[3rem\] {
   padding: 3rem;
-}
-
-.p-\[0\.7rem\] {
-  padding: 0.7rem;
 }
 
 .px-1 {
@@ -2970,6 +2977,10 @@ html {
   .md\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+  .md\:bg-\[url\(\'\/static\/assets\/wave\.svg\'\)\] {
+    background-image: url('/static/assets/wave.svg');
+  }
 }
 
 @media (min-width: 1024px) {
@@ -2998,6 +3009,10 @@ html {
     background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
   }
 
+  .lg\:bg-\[url\(\'\/static\/assets\/wave\.svg\'\)\] {
+    background-image: url('/static/assets/wave.svg');
+  }
+
   .lg\:p-\[2rem\] {
     padding: 2rem;
   }
@@ -3016,10 +3031,6 @@ html {
 
   .xl\:mt-\[3rem\] {
     margin-top: 3rem;
-  }
-
-  .xl\:h-auto {
-    height: auto;
   }
 
   .xl\:h-\[3rem\] {

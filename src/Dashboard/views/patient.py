@@ -37,7 +37,9 @@ def editPatient(request: HttpRequest, patientId: str):
 @login_required(login_url='sign-in')
 def deletePatient(request: HttpRequest, patientId: str):
   patient = get_object_or_404(Patient, id=patientId)
+  medicalHistory = get_object_or_404(MedicalHistory, patient=patient.id)
   patient.delete()
+  medicalHistory.delete()
   return redirect('patient-list')
 
 @login_required(login_url='sign-in')
@@ -51,7 +53,7 @@ def patientList(request: HttpRequest):
       Q(firstName__icontains=search) |
       Q(lastName__icontains=search) |
       Q(dateOfBirth__icontains=search) |
-      Q(adress__icontains=search) |
+      Q(address__icontains=search) |
       Q(phoneNumber__icontains=search) |
       Q(email__icontains=search) |
       Q(gender__icontains=search) |

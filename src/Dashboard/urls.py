@@ -46,7 +46,7 @@ urlpatterns = [
   path('dashboard/appointments/delete/<str:appointmentId>/', appointement.deleteAppointment, name='delete-appointment'),
   path('dashboard/appointments/apply-procedure/<str:appointmentId>/', procedureApplication.applyProcedure, name='apply-procedure'),
 
-  path('dashboard/procedure-applications/delete/<str:procedureApplicationId>', procedureApplication.deleteProcedureApplication, name='delete-procedure-application'),
+  path('dashboard/procedure-applications/delete/<str:procedureApplicationId>/', procedureApplication.deleteProcedureApplication, name='delete-procedure-application'),
 
   path('dashboard/prescriptions/patient/<str:appointmentId>/add/', prescription.addPrescription, name='add-prescription'),
   path('dashboard/prescriptions/patient/<str:prescriptionId>/edit/', prescription.editPrescription, name='edit-prescription'),

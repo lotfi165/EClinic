@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script src="{% static "chart/chart.js" %}" defer></script>
   <title>Dashboard</title>
 {% endblock head %} 
 
@@ -49,7 +49,10 @@
         <canvas id="staff-per-department"></canvas>
       </div>
       <div class="h-[20rem]">
-        <canvas id="procedure-application-per-procedure"></canvas>
+        <canvas id="patient-count-by-gender"></canvas>
+      </div>
+      <div class="h-[20rem]">
+        <canvas id="medical-staff-count-by-gender"></canvas>
       </div>
     </div>
 
@@ -58,6 +61,8 @@
         const staffPerSpeciality = document.getElementById('staff-per-speciality');
         const staffPerDepartment = document.getElementById('staff-per-department');
         const procedureApplicationPerProcedure = document.getElementById('procedure-application-per-procedure');
+        const patientCountByGender = document.getElementById('patient-count-by-gender');
+        const medicalStaffCountByGender = document.getElementById('medical-staff-count-by-gender');
 
         new Chart(staffPerDepartment, {
           type: 'bar',
@@ -106,11 +111,9 @@
             responsive: true,
             maintainAspectRatio: false,
           }
-        });
-        
+        });   
         new Chart(procedureApplicationPerProcedure, {
           type: 'bar',
-          color: "red",
           data: {
             labels: [
               {% for key in procedureApplicationCountKeys %}
@@ -122,6 +125,54 @@
               backgroundColor: 'rgba(34, 244, 238, 0.5)',
               data: [
                 {% for key in procedureApplicationCountValues %}
+                  {{key}},
+                {% endfor %}
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+          }
+        });
+        new Chart(patientCountByGender, {
+          type: 'bar',
+          data: {
+            labels: [
+              {% for key in patientCountByGenderKeys %}
+                "{{key}}",
+              {% endfor %}
+            ],
+            datasets: [{
+              label: 'Patient count by gender',
+              backgroundColor: 'rgba(34, 244, 238, 0.5)',
+              data: [
+                {% for key in patientCountByGenderValues %}
+                  {{key}},
+                {% endfor %}
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+          }
+        });
+        new Chart(medicalStaffCountByGender, {
+          type: 'bar',
+          data: {
+            labels: [
+              {% for key in medicalStaffCountByGenderKeys %}
+                "{{key}}",
+              {% endfor %}
+            ],
+            datasets: [{
+              label: 'Medical staff count by gender',
+              backgroundColor: 'rgba(34, 244, 238, 0.5)',
+              data: [
+                {% for key in medicalStaffCountByGenderValues %}
                   {{key}},
                 {% endfor %}
               ],

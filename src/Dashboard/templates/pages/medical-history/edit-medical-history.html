@@ -10,6 +10,10 @@
   <div class="flex flex-1 flex-col items-center pb-[5rem]">
     <form class="flex flex-1 flex-col w-[90%] max-w-[50rem]" action="" method="post">
       {% csrf_token %}
+
+      <div class="flex mb-[1rem]">
+        <a class="btn btn-wide" href="{% url "patient-list" %}"><i class="fas fa-angle-left"></i>Back to patient list</a>
+      </div>
   
       <div class="text-[30pt] font-bold"><i class="fas fa-clock-rotate-left text-primary mr-[1rem]"></i>Edit medical history</div>
       <div class="text-[15pt] font-semibold ml-[1rem] mb-[1rem]"><i class="fas fa-user text-primary mr-[1rem]"></i>Patient: {{patient.firstName}} {{patient.lastName}}</div>
