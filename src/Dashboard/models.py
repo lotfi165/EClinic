@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from django.core.validators import EmailValidator, RegexValidator
 
 # Create your models here.
 class Genders(models.TextChoices):
@@ -21,9 +22,9 @@ class Patient(models.Model):
   lastName = models.CharField(max_length=256, null=False)
   dateOfBirth = models.DateField(null=False)
   adress = models.CharField(max_length=256, null=False)
-  phoneNumber = models.CharField(max_length=20, null=False, unique=True)
-  email = models.CharField(max_length=254, null=False, unique=True)
-  gender = models.CharField(max_length=6, choices=Genders.choices)
+  phoneNumber = models.CharField(max_length=20, null=False, unique=True, validators=[RegexValidator(r'^(00213|\+213|0)(5|6|7)\d{8}$')])
+  email = models.CharField(max_length=254, null=False, unique=True, validators=[EmailValidator()])
+  gender = models.CharField(max_length=10, choices=Genders.choices, null=False)
   createdAt = models.DateTimeField(auto_now_add=True)
   updatedAt = models.DateTimeField(auto_now=True)
 
@@ -47,9 +48,9 @@ class MedicalStaff(models.Model):
   lastName = models.CharField(max_length=256, null=False)
   dateOfBirth = models.DateField(null=False)
   adress = models.CharField(max_length=256, null=False)
-  phoneNumber = models.CharField(max_length=20, null=False, unique=True)
-  email = models.CharField(max_length=254, null=False, unique=True)
-  gender = models.CharField(max_length=6, choices=Genders.choices)
+  phoneNumber = models.CharField(max_length=20, null=False, unique=True, validators=[RegexValidator(r'^(00213|\+213|0)(5|6|7)\d{8}$')])
+  email = models.CharField(max_length=254, null=False, unique=True, validators=[EmailValidator()])
+  gender = models.CharField(max_length=10, choices=Genders.choices, null=False)
   createdAt = models.DateTimeField(auto_now_add=True)
   updatedAt = models.DateTimeField(auto_now=True)
 
@@ -73,7 +74,7 @@ class Speciality(models.Model):
 class Procedure(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   name = models.CharField(max_length=256, null=False, unique=True)
-  type = models.CharField(max_length=15, choices=ProcedureType.choices)
+  type = models.CharField(max_length=20, choices=ProcedureType.choices, null=False)
 
   def __str__(self):
      return f"{self.name}"
@@ -91,8 +92,8 @@ class ProcedureApplication(models.Model):
 class Appointment(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   patient = models.ForeignKey('Patient', on_delete=models.CASCADE)
-  timestamp = models.DateTimeField()
-  state = models.CharField(max_length=10, choices=AppointmentState.choices, default=AppointmentState.SCHEDULED, blank=True)
+  timestamp = models.DateTimeField(null=False)
+  state = models.CharField(max_length=15, choices=AppointmentState.choices, default=AppointmentState.SCHEDULED, blank=True)
   createdAt = models.DateTimeField(auto_now_add=True)
   updatedAt = models.DateTimeField(auto_now=True)
 
